@@ -235,12 +235,14 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
-                            <!-- Save Button -->
-                            <x-admin::button
-                                button-type="submit"
-                                class="primary-button justify-center"
-                                :title="trans('admin::app.settings.themes.edit.services-content.save-btn')"
-                            />
+                            <div class="flex items-center gap-x-2.5">
+                                <button 
+                                    type="submit"
+                                    class="cursor-pointer rounded-md border border-blue-700 bg-blue-600 px-3 py-1.5 font-semibold text-gray-50"
+                                >
+                                    @lang('admin::app.settings.themes.edit.services-content.save-btn')
+                                </button>
+                            </div>
                         </x-slot>
                     </x-admin::modal>
                 </form>

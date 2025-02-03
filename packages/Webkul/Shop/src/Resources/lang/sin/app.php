@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'කිසිවක් නැත',
-                        'total-amount' => 'මුළු මුදල',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'කරුණු තෝරන්න',
                     'select-above-options' => 'ඉහළට සහිත කරුණු තෝරන්න',
@@ -880,12 +873,9 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'කාණ්ඩ කාරසෙල්',
-            'image-carousel'      => 'රූප කාරසෙල්',
-            'offer'               => 'ඔබේ පළමු ඇනවුමට 40% ක විශේෂ වට්ටම් ලබා ගන්න, දැන් සෙවීම',
-            'product-carousel'    => 'නිෂ්පාදන කාරසෙල්',
-            'resend-verify-email' => 'තහවුරු කිරීමේ විද්‍යුත් තැපැල් නැවත යවන්න',
-            'verify-email'        => 'ඔබේ විද්‍යුත් තැපෑල තහවුරු කරන්න',
+            'offer'               => 'ඔබගේ 1 වන ඇණවුම එකට ඉහළ වෙනි 40% ඉටු SHOP NOW',
+            'resend-verify-email' => 'ඊමේල් තහවුරු කිරීමේදී ඔබගේ ඊමේල් එක නැවත යවන්න',
+            'verify-email'        => 'ඔබගේ ඊමේල් ගිණුම තහවුරු කරන්න',
         ],
 
         'thanks-for-contact' => 'ඔබගේ අදහස් සහ ප්‍රශ්න සමඟ අපට ඇමතුම් කිරීම සඳහා ස්තූතියි. අපි ඔබට ඉවස්වේය.',
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'ඊළඟ පිටුව',
             'pagination-showing' => ':total ඇතුල් :firstItem සිට :lastItem දක්වා පෙන්වයි',
-            'prev-page'          => 'පෙර පිටුව',
         ],
     ],
 

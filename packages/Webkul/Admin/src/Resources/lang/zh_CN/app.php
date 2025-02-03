@@ -190,11 +190,6 @@ return [
                 'title'                   => '为 :name 创建订单',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => '无',
-                        'total-amount' => '总金额',
-                    ],
-
                     'configurable' => [
                         'select-options' => '请选择一个选项',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => '链接',
-                    ],
-
-                    'virtual' => [
-                        'none'         => '无',
-                        'total-amount' => '总金额',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => '添加选项',
-                            'empty-info'        => '快速创建可定制选项。',
-                            'empty-title'       => '添加选项',
-                            'info'              => '这将定制简单的产品。',
-                            'title'             => '可定制项目',
-
-                            'update-create' => [
-                                'is-required'               => '是否必填',
-                                'max-characters'            => '最大字符数',
-                                'name'                      => '标题',
-                                'no'                        => '否',
-                                'price'                     => '价格',
-                                'save-btn'                  => '保存',
-                                'supported-file-extensions' => '支持的文件扩展名',
-                                'title'                     => '选项',
-                                'type'                      => '类型',
-                                'yes'                       => '是',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => '添加选项',
-                                'delete'      => '删除',
-                                'delete-btn'  => '删除',
-                                'edit-btn'    => '编辑',
-                                'empty-info'  => '快速创建不同产品组合。',
-                                'empty-title' => '添加选项',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => '文本',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => '文本区域',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => '复选框',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => '单选框',
-                                    ],
-
-                                    'select' => [
-                                        'title' => '选择',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => '多选',
-                                    ],
-
-                                    'date' => [
-                                        'title' => '日期',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => '日期和时间',
-                                    ],
-
-                                    'time' => [
-                                        'title' => '时间',
-                                    ],
-
-                                    'file' => [
-                                        'title' => '文件',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => '标签',
-                                        'price'    => '价格',
-                                        'save-btn' => '保存',
-                                        'title'    => '选项',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => '产品已关联到配置、组或捆绑产品。',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => '添加变体',
                         'delete-btn'        => '删除',
@@ -2627,6 +2530,7 @@ return [
                     'general'           => '常规',
                     'group-separator'   => '分组分隔符',
                     'name'              => '名称',
+                    'separator-note'    => ':attribute 字段只能接受逗号（,）和点（.）操作符',
                     'save-btn'          => '保存货币',
                     'symbol'            => '符号',
                     'title'             => '创建新货币',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => '主题',
 
                 'datagrid' => [
-                    'active'       => '活动',
-                    'channel_name' => '频道名称',
-                    'delete'       => '删除',
-                    'id'           => 'ID',
-                    'inactive'     => '非活动',
-                    'name'         => '名称',
-                    'sort-order'   => '排序顺序',
-                    'status'       => '状态',
-                    'theme'        => '主题',
-                    'type'         => '类型',
-                    'view'         => '查看',
+                    'active'        => '活动',
+                    'channel_name'  => '频道名称',
+                    'change-status' => '更改状态',
+                    'delete'        => '删除',
+                    'id'            => 'ID',
+                    'inactive'      => '非活动',
+                    'name'          => '名称',
+                    'sort-order'    => '排序顺序',
+                    'status'        => '状态',
+                    'theme'         => '主题',
+                    'type'          => '类型',
+                    'view'          => '查看',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'Vicuna',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => '设置站点地图选项。',
-                    'title' => '站点地图',
-
-                    'settings' => [
-                        'enabled' => '启用',
-                        'info'    => '启用或禁用您网站的站点地图，以提高搜索引擎优化并增强用户体验。',
-                        'title'   => '设置',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => '设置文件限制选项。',
-                        'max-file-size'    => '最大文件大小',
-                        'max-url-per-file' => '每个文件的最大 URL 数量',
-                        'title'            => '文件限制',
-                    ],
-
-                    'store-url' => [
-                        'info'  => '设置商店 URL 的频率和优先级选项。',
-
-                        'frequency' => [
-                            'title' => '频率',
-
-                            'options' => [
-                                'always'  => '始终',
-                                'daily'   => '每天',
-                                'hourly'  => '每小时',
-                                'monthly' => '每月',
-                                'never'   => '从不',
-                                'weekly'  => '每周',
-                                'yearly'  => '每年',
-                            ],
-                        ],
-
-                        'title'    => '商店 URL',
-                        'priority' => '优先级',
-                    ],
-
-                    'categories' => [
-                        'info'  => '设置类别的频率和优先级选项。',
-
-                        'frequency' => [
-                            'title' => '频率',
-
-                            'options' => [
-                                'always'  => '始终',
-                                'daily'   => '每天',
-                                'hourly'  => '每小时',
-                                'monthly' => '每月',
-                                'never'   => '从不',
-                                'weekly'  => '每周',
-                                'yearly'  => '每年',
-                            ],
-                        ],
-
-                        'title'    => '类别',
-                        'priority' => '优先级',
-                    ],
-
-                    'products' => [
-                        'info'  => '设置产品的频率和优先级选项。',
-
-                        'frequency' => [
-                            'title' => '频率',
-
-                            'options' => [
-                                'always'  => '始终',
-                                'daily'   => '每天',
-                                'hourly'  => '每小时',
-                                'monthly' => '每月',
-                                'never'   => '从不',
-                                'weekly'  => '每周',
-                                'yearly'  => '每年',
-                            ],
-                        ],
-
-                        'title'    => '产品',
-                        'priority' => '优先级',
-                    ],
-
-                    'cms' => [
-                        'info'  => '设置 CMS 页面的频率和优先级选项。',
-
-                        'frequency' => [
-                            'title' => '频率',
-
-                            'options' => [
-                                'always'  => '始终',
-                                'daily'   => '每天',
-                                'hourly'  => '每小时',
-                                'monthly' => '每月',
-                                'never'   => '从不',
-                                'weekly'  => '每周',
-                                'yearly'  => '每年',
-                            ],
-                        ],
-
-                        'title'    => 'CMS 页面',
-                        'priority' => '优先级',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => '允许客户评价',
-                        'allow-guest-review'      => '允许访客评价',
-                        'censoring-reviewer-name' => '审查者姓名审查',
-                        'display-review-count'    => '显示评级的评论计数。',
-                        'display-star-count'      => '显示评分中的星级数。',
-                        'summary'                 => '概括',
-                        'title'                   => '评价',
-                        'title-info'              => '对某物进行评估或评价，通常涉及意见和反馈。',
+                        'allow-customer-review' => '允许客户评价',
+                        'allow-guest-review'    => '允许访客评价',
+                        'display-review-count'  => '显示评级的评论计数。',
+                        'display-star-count'    => '显示评分中的星级数。',
+                        'summary'               => '概括',
+                        'title'                 => '评价',
+                        'title-info'            => '对某物进行评估或评价，通常涉及意见和反馈。',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => '页脚文字',
-                        'footer-text-info' => '输入将显示在PDF页脚中的文本。',
                         'info'             => '设置 PDF 打印输出，以在页眉中显示发票 ID、订单 ID，并包含发票 Logo。',
                         'invoice-id-info'  => '设置是否在发票页眉中显示发票 ID。',
                         'invoice-id-title' => '在页眉显示发票 ID',

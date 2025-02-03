@@ -160,8 +160,8 @@ return [
                     'pay-by'          => 'Betaal Via - :method',
                     'pay-via'         => 'Betaal Via',
                     'pending-payment' => 'In afwachting van betaling',
-                    'pending'         => 'Wachtend',
-                    'processing'      => 'Bezig met verwerken',
+                    'pending'         => 'In behandeling',
+                    'processing'      => 'Verwerking',
                     'product-count'   => ':count + Meer producten',
                     'status'          => 'Status',
                     'success'         => 'Succes',
@@ -190,11 +190,6 @@ return [
                 'title'                   => 'Bestelling aanmaken voor :name',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => 'Geen',
-                        'total-amount' => 'Totaalbedrag',
-                    ],
-
                     'configurable' => [
                         'select-options' => 'Selecteer een optie',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => 'Links',
-                    ],
-
-                    'virtual' => [
-                        'none'         => 'Geen',
-                        'total-amount' => 'Totaalbedrag',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => 'Optie toevoegen',
-                            'empty-info'        => 'Om snel aanpasbare opties te creëren.',
-                            'empty-title'       => 'Optie toevoegen',
-                            'info'              => 'Dit zal het eenvoudige product aanpassen.',
-                            'title'             => 'Aanpasbaar item',
-
-                            'update-create' => [
-                                'is-required'               => 'Is verplicht',
-                                'max-characters'            => 'Max. aantal tekens',
-                                'name'                      => 'Titel',
-                                'no'                        => 'Nee',
-                                'price'                     => 'Prijs',
-                                'save-btn'                  => 'Opslaan',
-                                'supported-file-extensions' => 'Ondersteunde bestandsextensies',
-                                'title'                     => 'Optie',
-                                'type'                      => 'Type',
-                                'yes'                       => 'Ja',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => 'Optie toevoegen',
-                                'delete'      => 'Verwijderen',
-                                'delete-btn'  => 'Verwijderen',
-                                'edit-btn'    => 'Bewerken',
-                                'empty-info'  => 'Om snel verschillende productcombinaties te creëren.',
-                                'empty-title' => 'Optie toevoegen',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => 'Tekst',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => 'Tekstvak',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => 'Selectievakje',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => 'Radio',
-                                    ],
-
-                                    'select' => [
-                                        'title' => 'Selecteren',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => 'Multiselect',
-                                    ],
-
-                                    'date' => [
-                                        'title' => 'Datum',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => 'Datum en tijd',
-                                    ],
-
-                                    'time' => [
-                                        'title' => 'Tijd',
-                                    ],
-
-                                    'file' => [
-                                        'title' => 'Bestand',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => 'Label',
-                                        'price'    => 'Prijs',
-                                        'save-btn' => 'Opslaan',
-                                        'title'    => 'Optie',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => 'Het product is al gekoppeld aan een configureerbaar, gegroepeerd of gebundeld product.',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => 'Variant Toevoegen',
                         'delete-btn'        => 'Verwijderen',
@@ -1647,7 +1550,7 @@ return [
                         'pay-via'         => 'Betaalwijze',
                         'pending'         => 'In behandeling',
                         'pending-payment' => 'Betaling in behandeling',
-                        'processing'      => 'Bezig met verwerken',
+                        'processing'      => 'Verwerking',
                         'status'          => 'Status',
                         'view'            => 'Bekijken',
                     ],
@@ -2627,6 +2530,7 @@ return [
                     'general'           => 'Algemeen',
                     'group-separator'   => 'Groepsscheidingsteken',
                     'name'              => 'Naam',
+                    'separator-note'    => 'Het :attribute veld kan alleen de komma (,) en punt (.) operators accepteren',
                     'save-btn'          => 'Valuta Opslaan',
                     'symbol'            => 'Symbool',
                     'title'             => 'Nieuwe Valuta Aanmaken',
@@ -2875,7 +2779,7 @@ return [
                 'index' => [
                     'delete-warning' => 'Weet je zeker dat je wilt verwijderen?',
                     'tax-category'   => 'Belastingcategorie',
-                    'title'          => 'BTW categorieën',
+                    'title'          => 'Belastingcategorieën',
 
                     'datagrid' => [
                         'actions' => 'Acties',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => 'Thema\'s',
 
                 'datagrid' => [
-                    'active'       => 'Actief',
-                    'channel_name' => 'Kanaalnaam',
-                    'delete'       => 'Verwijderen',
-                    'id'           => 'ID',
-                    'inactive'     => 'Inactief',
-                    'name'         => 'Naam',
-                    'sort-order'   => 'Sorteervolgorde',
-                    'status'       => 'Status',
-                    'theme'        => 'Thema',
-                    'type'         => 'Type',
-                    'view'         => 'Bekijken',
+                    'active'        => 'Actief',
+                    'channel_name'  => 'Kanaalnaam',
+                    'change-status' => 'Status wijzigen',
+                    'delete'        => 'Verwijderen',
+                    'id'            => 'ID',
+                    'inactive'      => 'Inactief',
+                    'name'          => 'Naam',
+                    'sort-order'    => 'Sorteervolgorde',
+                    'status'        => 'Status',
+                    'theme'         => 'Thema',
+                    'type'          => 'Type',
+                    'view'          => 'Bekijken',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'Vicuna',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => 'Stel sitemapopties in.',
-                    'title' => 'Sitemap',
-
-                    'settings' => [
-                        'enabled' => 'Ingeschakeld',
-                        'info'    => 'Schakel de sitemap in of uit voor uw website om de zoekmachineoptimalisatie te verbeteren en de gebruikerservaring te verbeteren.',
-                        'title'   => 'Instellingen',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => 'Stel bestandslimietopties in.',
-                        'max-file-size'    => 'Maximale bestandsgrootte',
-                        'max-url-per-file' => 'Maximaal aantal URL\'s per bestand',
-                        'title'            => 'Bestandslimieten',
-                    ],
-
-                    'store-url' => [
-                        'info'  => 'Stel frequentie- en prioriteitsopties in voor de winkel-URL.',
-
-                        'frequency' => [
-                            'title' => 'Frequentie',
-
-                            'options' => [
-                                'always'  => 'Altijd',
-                                'daily'   => 'Dagelijks',
-                                'hourly'  => 'Elk uur',
-                                'monthly' => 'Maandelijks',
-                                'never'   => 'Nooit',
-                                'weekly'  => 'Wekelijks',
-                                'yearly'  => 'Jaarlijks',
-                            ],
-                        ],
-
-                        'title'    => 'Winkel URL',
-                        'priority' => 'Prioriteit',
-                    ],
-
-                    'categories' => [
-                        'info'  => 'Stel frequentie- en prioriteitsopties in voor de categorieën.',
-
-                        'frequency' => [
-                            'title' => 'Frequentie',
-
-                            'options' => [
-                                'always'  => 'Altijd',
-                                'daily'   => 'Dagelijks',
-                                'hourly'  => 'Elk uur',
-                                'monthly' => 'Maandelijks',
-                                'never'   => 'Nooit',
-                                'weekly'  => 'Wekelijks',
-                                'yearly'  => 'Jaarlijks',
-                            ],
-                        ],
-
-                        'title'    => 'Categorieën',
-                        'priority' => 'Prioriteit',
-                    ],
-
-                    'products' => [
-                        'info'  => 'Stel frequentie- en prioriteitsopties in voor de producten.',
-
-                        'frequency' => [
-                            'title' => 'Frequentie',
-
-                            'options' => [
-                                'always'  => 'Altijd',
-                                'daily'   => 'Dagelijks',
-                                'hourly'  => 'Elk uur',
-                                'monthly' => 'Maandelijks',
-                                'never'   => 'Nooit',
-                                'weekly'  => 'Wekelijks',
-                                'yearly'  => 'Jaarlijks',
-                            ],
-                        ],
-
-                        'title'    => 'Producten',
-                        'priority' => 'Prioriteit',
-                    ],
-
-                    'cms' => [
-                        'info'  => 'Stel frequentie- en prioriteitsopties in voor de CMS-pagina\'s.',
-
-                        'frequency' => [
-                            'title' => 'Frequentie',
-
-                            'options' => [
-                                'always'  => 'Altijd',
-                                'daily'   => 'Dagelijks',
-                                'hourly'  => 'Elk uur',
-                                'monthly' => 'Maandelijks',
-                                'never'   => 'Nooit',
-                                'weekly'  => 'Wekelijks',
-                                'yearly'  => 'Jaarlijks',
-                            ],
-                        ],
-
-                        'title'    => 'CMS Pagina\'s',
-                        'priority' => 'Prioriteit',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => 'Klantbeoordeling toestaan',
-                        'allow-guest-review'      => 'Gastbeoordeling toestaan',
-                        'censoring-reviewer-name' => 'Naam recensent censureren',
-                        'display-review-count'    => 'Geef het aantal recensies voor beoordelingen weer.',
-                        'display-star-count'      => 'Geef het aantal sterren in beoordelingen weer.',
-                        'summary'                 => 'Samenvatting',
-                        'title'                   => 'Beoordeling',
-                        'title-info'              => 'Evaluatie of beoordeling van iets, vaak met meningen en feedback.',
+                        'allow-customer-review' => 'Klantbeoordeling toestaan',
+                        'allow-guest-review'    => 'Gastbeoordeling toestaan',
+                        'display-review-count'  => 'Geef het aantal recensies voor beoordelingen weer.',
+                        'display-star-count'    => 'Geef het aantal sterren in beoordelingen weer.',
+                        'summary'               => 'Samenvatting',
+                        'title'                 => 'Beoordeling',
+                        'title-info'            => 'Evaluatie of beoordeling van iets, vaak met meningen en feedback.',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => 'Voettekst',
-                        'footer-text-info' => 'Voer de tekst in die in de voettekst van de PDF verschijnt.',
                         'info'             => 'Configureer PDF-afdrukken om het factuurnummer en het bestelnummer in de koptekst weer te geven en het factuurlogo op te nemen.',
                         'invoice-id-info'  => 'Configureer de weergave van het factuurnummer in de factuurkop.',
                         'invoice-id-title' => 'Toon factuurnummer in koptekst',
@@ -4315,7 +4115,7 @@ return [
                 'settings'                 => 'Instellingen',
                 'shipments'                => 'Zendingen',
                 'sitemaps'                 => 'Sitemaps',
-                'tax-categories'           => 'BTW categorieën',
+                'tax-categories'           => 'Belastingcategorieën',
                 'tax-rates'                => 'Belastingtarieven',
                 'taxes'                    => 'Belastingen',
                 'themes'                   => 'Thema\'s',
@@ -4557,7 +4357,7 @@ return [
         'shipments'                => 'Verzendingen',
         'sitemaps'                 => 'Sitemaps',
         'subscribers'              => 'Nieuwsbrief Abonnees',
-        'tax-categories'           => 'BTW categorieën',
+        'tax-categories'           => 'Belastingcategorieën',
         'tax-rates'                => 'Belastingtarieven',
         'taxes'                    => 'Belastingen',
         'themes'                   => 'Thema\'s',

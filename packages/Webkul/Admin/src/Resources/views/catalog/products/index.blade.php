@@ -401,30 +401,29 @@
                                         </div>
                                     </div>
 
-                                    {!! view_render_event('bagisto.admin.catalog.products.create_form.attributes.controls.after') !!}
+                                    {!! view_render_event('bagisto.admin.catalog.products.create_form.attributes.controls.before') !!}
                                 </div>
                             </x-slot>
 
                             <!-- Modal Footer -->
                             <x-slot:footer>
+                                <!-- Modal Submission -->
                                 <div class="flex items-center gap-x-2.5">
-                                    <!-- Back Button -->
-                                    <x-admin::button
-                                        button-type="button"
+                                    <button
+                                        type="button"
                                         class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                                        :title="trans('admin::app.catalog.products.index.create.back-btn')"
                                         v-if="attributes.length"
                                         @click="attributes = []"
-                                    />
+                                    >
+                                        @lang('admin::app.catalog.products.index.create.back-btn')
+                                    </button>
 
-                                    <!-- Save Button -->
-                                    <x-admin::button
-                                        button-type="button"
+                                    <button
+                                        type="submit"
                                         class="primary-button"
-                                        :title="trans('admin::app.catalog.products.index.create.save-btn')"
-                                        ::loading="isLoading"
-                                        ::disabled="isLoading"
-                                    />
+                                    >
+                                        @lang('admin::app.catalog.products.index.create.save-btn')
+                                    </button>
                                 </div>
                             </x-slot>
                         </x-admin::modal>
@@ -441,16 +440,12 @@
                     return {
                         attributes: [],
 
-                        superAttributes: {},
-
-                        isLoading: false,
+                        superAttributes: {}
                     };
                 },
 
                 methods: {
                     create(params, { resetForm, resetField, setErrors }) {
-                        this.isLoading = true;
-
                         this.attributes.forEach(attribute => {
                             params.super_attributes ||= {};
 
@@ -459,8 +454,6 @@
 
                         this.$axios.post("{{ route('admin.catalog.products.store') }}", params)
                             .then((response) => {
-                                this.isLoading = false;
-
                                 if (response.data.data.redirect_url) {
                                     window.location.href = response.data.data.redirect_url;
                                 } else {
@@ -470,8 +463,6 @@
                                 }
                             })
                             .catch(error => {
-                                this.isLoading = false;
-
                                 if (error.response.status == 422) {
                                     setErrors(error.response.data.errors);
                                 }

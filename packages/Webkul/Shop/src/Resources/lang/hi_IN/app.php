@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'कोई नहीं',
-                        'total-amount' => 'कुल राशि',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'कृपया एक विकल्प चुनें',
                     'select-above-options' => 'कृपया ऊपर के विकल्प चुनें',
@@ -880,12 +873,9 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'श्रेणियाँ कैरोसेल',
-            'image-carousel'      => 'चित्र कैरोसेल',
-            'offer'               => 'अपनी पहली ऑर्डर पर 40% तक छूट पाएं, अभी खरीदारी करें',
-            'product-carousel'    => 'उत्पाद कैरोसेल',
+            'offer'               => 'पहले आदेश पर अपटू 40% तक की छूट पाएं अभी खरीदें',
             'resend-verify-email' => 'सत्यापन ईमेल फिर से भेजें',
-            'verify-email'        => 'अपने ईमेल खाते की पुष्टि करें',
+            'verify-email'        => 'अपने ईमेल खाता सत्यापित करें',
         ],
 
         'thanks-for-contact' => 'आपके टिप्पणियों और प्रश्नों के साथ हमसे संपर्क करने के लिए धन्यवाद। हम आपको बहुत जल्द ही जवाब देंगे।',
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'अगला पृष्ठ',
             'pagination-showing' => 'कुल :total आइटमों में :firstItem से :lastItem तक दिखा रहा है',
-            'prev-page'          => 'पिछला पृष्ठ',
         ],
     ],
 

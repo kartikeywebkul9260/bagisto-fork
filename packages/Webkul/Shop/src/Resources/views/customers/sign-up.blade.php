@@ -56,7 +56,6 @@
                 <x-shop::form :action="route('shop.customers.register.store')">
                     {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
-                    <!-- First Name -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
                             @lang('shop::app.customers.signup-form.first-name')
@@ -79,7 +78,6 @@
 
                     {!! view_render_event('bagisto.shop.customers.signup_form.first_name.after') !!}
 
-                    <!-- Last Name -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
                             @lang('shop::app.customers.signup-form.last-name')
@@ -102,7 +100,6 @@
 
                     {!! view_render_event('bagisto.shop.customers.signup_form.last_name.after') !!}
 
-                    <!-- Email -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
                             @lang('shop::app.customers.signup-form.email')
@@ -125,8 +122,6 @@
 
                     {!! view_render_event('bagisto.shop.customers.signup_form.email.after') !!}
 
-
-                    <!-- Password -->
                     <x-shop::form.control-group class="mb-6">
                         <x-shop::form.control-group.label class="required">
                             @lang('shop::app.customers.signup-form.password')
@@ -150,7 +145,6 @@
 
                     {!! view_render_event('bagisto.shop.customers.signup_form.password.after') !!}
 
-                    <!-- Confirm Password -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label>
                             @lang('shop::app.customers.signup-form.confirm-pass')
@@ -175,11 +169,10 @@
 
                     @if (core()->getConfigData('customer.captcha.credentials.status'))
                         <div class="mb-5 flex">
-                            {!! \Webkul\Customer\Facades\Captcha::render() !!}
+                            {!! Captcha::render() !!}
                         </div>
                     @endif
 
-                    <!-- Subscribed Button -->
                     @if (core()->getConfigData('customer.settings.create_new_account_options.news_letter'))
                         <div class="flex select-none items-center gap-1.5">
                             <input
@@ -206,7 +199,6 @@
                     {!! view_render_event('bagisto.shop.customers.signup_form.newsletter_subscription.after') !!}
 
                     <div class="mt-8 flex flex-wrap items-center gap-9 max-sm:justify-center max-sm:gap-5">
-                        <!-- Save Button -->
                         <button
                             class="primary-button m-0 mx-auto block w-full max-w-[374px] rounded-2xl px-11 py-4 text-center text-base max-md:max-w-full max-md:rounded-lg max-md:py-3 max-sm:py-1.5 ltr:ml-0 rtl:mr-0"
                             type="submit"
@@ -241,6 +233,6 @@
 	</div>
 
     @push('scripts')
-        {!! \Webkul\Customer\Facades\Captcha::renderJS() !!}
+        {!! Captcha::renderJS() !!}
     @endpush
 </x-shop::layouts>

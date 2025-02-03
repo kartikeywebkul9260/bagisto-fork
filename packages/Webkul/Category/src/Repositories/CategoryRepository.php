@@ -129,9 +129,10 @@ class CategoryRepository extends Repository
     /**
      * Specify category tree.
      *
+     * @param  int  $id
      * @return \Webkul\Category\Contracts\Category
      */
-    public function getCategoryTree(?int $id = null)
+    public function getCategoryTree($id = null)
     {
         return $id
             ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->get()->toTree()
@@ -141,9 +142,10 @@ class CategoryRepository extends Repository
     /**
      * Specify category tree.
      *
+     * @param  int  $id
      * @return \Illuminate\Support\Collection
      */
-    public function getCategoryTreeWithoutDescendant(?int $id = null)
+    public function getCategoryTreeWithoutDescendant($id = null)
     {
         return $id
             ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->whereNotDescendantOf($id)->get()->toTree()

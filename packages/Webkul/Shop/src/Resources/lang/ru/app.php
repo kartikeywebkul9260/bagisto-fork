@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'Ничего',
-                        'total-amount' => 'Общая сумма',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'Пожалуйста, выберите опцию',
                     'select-above-options' => 'Пожалуйста, выберите вышеуказанные опции',
@@ -880,11 +873,8 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'Карусель категорий',
-            'image-carousel'      => 'Карусель изображений',
-            'offer'               => 'Получите ДО 40% СКИДКИ на ваш первый заказ, ПОКУПАЙТЕ СЕЙЧАС',
-            'product-carousel'    => 'Карусель продуктов',
-            'resend-verify-email' => 'Повторно отправить письмо с подтверждением',
+            'offer'               => 'Получите скидку до 40% на свой первый заказ. ПОКУПАЙТЕ СЕЙЧАС',
+            'resend-verify-email' => 'Повторно отправить письмо для подтверждения почты',
             'verify-email'        => 'Подтвердите вашу электронную почту',
         ],
 
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'Следующая страница',
             'pagination-showing' => 'Показаны записи с :firstItem по :lastItem из :total',
-            'prev-page'          => 'Предыдущая страница',
         ],
     ],
 

@@ -444,6 +444,8 @@
                                     name="default_value"
                                     :label="trans('admin::app.catalog.attributes.create.default-value')"
                                 />
+
+                                <x-admin::form.control-group.error control-name="default_value" />
                             </x-admin::form.control-group>
                         </x-slot>
                     </x-admin::accordion>
@@ -682,14 +684,14 @@
                         @toggle="listenModal"
                         ref="addOptionsRow"
                     >
-                        <!-- Modal Header -->
+                        <!-- Modal Header !-->
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @lang('admin::app.catalog.attributes.create.add-option')
                             </p>
                         </x-slot>
 
-                        <!-- Modal Content -->
+                        <!-- Modal Content !-->
                         <x-slot:content>
                             <div
                                 class="grid"
@@ -747,7 +749,7 @@
                                 />
 
                                 <!-- Admin Input -->
-                                <x-admin::form.control-group class="!mb-2.5 w-full">
+                                <x-admin::form.control-group class="mb-2.5 w-full">
                                     <x-admin::form.control-group.label ::class="{ 'required' : ! isNullOptionChecked }">
                                         @lang('admin::app.catalog.attributes.create.admin')
                                     </x-admin::form.control-group.label>
@@ -765,7 +767,7 @@
 
                                 <!-- Locales Input -->
                                 @foreach ($locales as $locale)
-                                    <x-admin::form.control-group class="!mb-2.5 w-full">
+                                    <x-admin::form.control-group class="mb-2.5 w-full">
                                         <x-admin::form.control-group.label ::class="{ '{{core()->getDefaultLocaleCodeFromDefaultChannel() == $locale->code ? 'required' : ''}}' : ! isNullOptionChecked }">
                                             {{ $locale->name }} ({{ strtoupper($locale->code) }})
                                         </x-admin::form.control-group.label>
@@ -784,14 +786,14 @@
                             </div>
                         </x-slot>
 
-                        <!-- Modal Footer -->
+                        <!-- Modal Footer !-->
                         <x-slot:footer>
-                            <!-- Save Button -->
-                            <x-admin::button
-                                button-type="button"
+                            <button
+                                type="submit"
                                 class="primary-button"
-                                :title="trans('admin::app.catalog.attributes.create.option.save-btn')"
-                            />
+                            >
+                                @lang('admin::app.catalog.attributes.create.option.save-btn')
+                            </button>
                         </x-slot>
                     </x-admin::modal>
                 </form>
@@ -812,7 +814,7 @@
 
                         inputValidation: false,
 
-                        swatchType: '',
+                        swatchType: 'dropdown',
 
                         swatchAttribute: false,
 
@@ -842,33 +844,36 @@
 
                 methods: {
                     storeOptions(params, { resetForm }) {
+                        const sortedLocales = Object.values(this.locales).sort((a, b) => a.name.localeCompare(b.name));
+
+                        this.locales = sortedLocales.map(({ code, name }) => ({ code, name }));
+
+                        const sortedParams = sortedLocales.reduce((acc, locale) => {
+                            acc[locale.code] = params[locale.code] || null;
+                            return acc;
+                        }, {});
+
                         if (params.id) {
                             let foundIndex = this.options.findIndex(item => item.id === params.id);
 
-                            this.options.splice(foundIndex, 1, {
-                                ...this.options[foundIndex],
-                                params: {
-                                    ...this.options[foundIndex].params,
-                                    ...params,
-                                }
-                            });
+                            if (foundIndex !== -1) {
+                                Object.assign(this.options[foundIndex].params, sortedParams);
+                            }
                         } else {
                             this.options.push({
-                                id: 'option_' + this.optionRowCount,
-                                params
+                                id: `option_${this.optionRowCount}`,
+                                params: { admin_name: params.admin_name, ...sortedParams }
                             });
 
-                            params.id = 'option_' + this.optionRowCount;
+                            params.id = `option_${this.optionRowCount}`;
                             this.optionRowCount++;
                         }
 
-                        let formData = new FormData(this.$refs.createOptionsForm);
+                        const formData = new FormData(this.$refs.createOptionsForm);
 
                         const sliderImage = formData.get("swatch_value[]");
 
-                        if (sliderImage) {
-                            params.swatch_value = sliderImage;
-                        }
+                        if (sliderImage) params.swatch_value = sliderImage;
 
                         this.$refs.addOptionsRow.toggle();
 

@@ -114,20 +114,20 @@
                                         </div>
 
                                         @if ($customAttributeValue['type'] == 'file')
-                                            <a
-                                                href="{{ Storage::url($product[$customAttributeValue['code']]) }}"
+                                            <a 
+                                                href="{{ Storage::url($product[$customAttributeValue['code']]) }}" 
                                                 download="{{ $customAttributeValue['label'] }}"
                                             >
                                                 <span class="icon-download text-2xl"></span>
                                             </a>
                                         @elseif ($customAttributeValue['type'] == 'image')
-                                            <a
-                                                href="{{ Storage::url($product[$customAttributeValue['code']]) }}"
+                                            <a 
+                                                href="{{ Storage::url($product[$customAttributeValue['code']]) }}" 
                                                 download="{{ $customAttributeValue['label'] }}"
                                             >
-                                                <img
-                                                    class="min-h-5 min-w-5 h-5 w-5"
-                                                    src="{{ Storage::url($customAttributeValue['value']) }}"
+                                                <img 
+                                                    class="h-5 min-h-5 w-5 min-w-5" 
+                                                    src="{{ Storage::url($customAttributeValue['value']) }}" 
                                                 />
                                             </a>
                                         @else
@@ -213,7 +213,7 @@
                                             download="{{ $customAttributeValue['label'] }}"
                                         >
                                             <img
-                                                class="min-h-5 min-w-5 h-5 w-5"
+                                                class="h-5 min-h-5 w-5 min-w-5"
                                                 src="{{ Storage::url($customAttributeValue['value']) }}"
                                                 alt="Product Image"
                                             />
@@ -308,7 +308,7 @@
 
                                     @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
                                         <div
-                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-[46px] min-h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:text-base"
+                                            class="flex max-h-[46px] min-h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:min-h-7 max-sm:min-w-7 max-sm:text-base"
                                             role="button"
                                             aria-label="@lang('shop::app.products.view.add-to-wishlist')"
                                             tabindex="0"
@@ -375,8 +375,6 @@
                                 </p>
 
                                 {!! view_render_event('bagisto.shop.products.short_description.after', ['product' => $product]) !!}
-
-                                @include('shop::products.view.types.simple')
 
                                 @include('shop::products.view.types.configurable')
 
@@ -594,6 +592,25 @@
                         }
                     },
 
+                    updateQty(quantity, id) {
+                        this.isLoading = true;
+
+                        let qty = {};
+
+                        qty[id] = quantity;
+
+                        this.$axios.put('{{ route('shop.api.checkout.cart.update') }}', { qty })
+                            .then(response => {
+                                if (response.data.message) {
+                                    this.cart = response.data.data;
+                                } else {
+                                    this.$emitter.emit('add-flash', { type: 'warning', message: response.data.data.message });
+                                }
+
+                                this.isLoading = false;
+                            }).catch(error => this.isLoading = false);
+                    },
+
                     getCompareItemsStorageKey() {
                         return 'compare_items';
                     },
@@ -622,7 +639,7 @@
                                 behavior: 'smooth'
                             });
                         }
-
+                        
                         let tabElement = document.querySelector('#review-tab-button');
 
                         if (tabElement) {

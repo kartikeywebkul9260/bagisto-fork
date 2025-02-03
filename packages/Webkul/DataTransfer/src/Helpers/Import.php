@@ -2,110 +2,88 @@
 
 namespace Webkul\DataTransfer\Helpers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Webkul\DataTransfer\Contracts\Import as ImportContract;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
 use Webkul\DataTransfer\Helpers\Sources\AbstractSource;
 use Webkul\DataTransfer\Helpers\Sources\CSV as CSVSource;
-use Webkul\DataTransfer\Helpers\Sources\XLS as XLSSource;
-use Webkul\DataTransfer\Helpers\Sources\XLSX as XLSXSource;
-use Webkul\DataTransfer\Helpers\Sources\XML as XMLSource;
+use Webkul\DataTransfer\Helpers\Sources\Excel as ExcelSource;
 use Webkul\DataTransfer\Repositories\ImportBatchRepository;
 use Webkul\DataTransfer\Repositories\ImportRepository;
 
 class Import
 {
     /**
-     * Import state for pending import.
-     *
-     * @var string
+     * Import state for pending import
      */
     public const STATE_PENDING = 'pending';
 
     /**
-     * Import state for validated import.
-     *
-     * @var string
+     * Import state for validated import
      */
     public const STATE_VALIDATED = 'validated';
 
     /**
-     * Import state for processing import.
-     *
-     * @var string
+     * Import state for processing import
      */
     public const STATE_PROCESSING = 'processing';
 
     /**
-     * Import state for processed import.
-     *
-     * @var string
+     * Import state for processed import
      */
     public const STATE_PROCESSED = 'processed';
 
     /**
-     * Import state for linking import.
-     *
-     * @var string
+     * Import state for linking import
      */
     public const STATE_LINKING = 'linking';
 
     /**
-     * Import state for linked import.
-     *
-     * @var string
+     * Import state for linked import
      */
     public const STATE_LINKED = 'linked';
 
     /**
-     * Import state for indexing import.
-     *
-     * @var string
+     * Import state for indexing import
      */
     public const STATE_INDEXING = 'indexing';
 
     /**
-     * Import state for indexed import.
-     *
-     * @var string
+     * Import state for indexed import
      */
     public const STATE_INDEXED = 'indexed';
 
     /**
-     * Import state for completed import.
-     *
-     * @var string
+     * Import state for completed import
      */
     public const STATE_COMPLETED = 'completed';
 
     /**
-     * Validation strategy for skipping the error during the import process.
-     *
-     * @var string
+     * Validation strategy for skipping the error during the import process
      */
     public const VALIDATION_STRATEGY_SKIP_ERRORS = 'skip-errors';
 
     /**
-     * Validation strategy for stopping the import process on error.
-     *
-     * @var string
+     * Validation strategy for stopping the import process on error
      */
     public const VALIDATION_STRATEGY_STOP_ON_ERROR = 'stop-on-errors';
 
     /**
-     * Action constant for updating/creating for the resource.
-     *
-     * @var string
+     * Action constant for updating/creating for the resource
      */
     public const ACTION_APPEND = 'append';
 
     /**
-     * Action constant for deleting the resource.
-     *
-     * @var string
+     * Action constant for deleting the resource
      */
     public const ACTION_DELETE = 'delete';
 
@@ -115,9 +93,9 @@ class Import
     protected ImportContract $import;
 
     /**
-     * Type importer instance.
+     * Error helper instance.
      *
-     * @var AbstractImporter
+     * @var \Webkul\DataTransfer\Helpers\Error
      */
     protected $typeImporter;
 
@@ -165,39 +143,23 @@ class Import
      */
     public function getSource(): AbstractSource
     {
-        if (Str::endsWith($this->import->file_path, '.csv')) {
-            return new CSVSource(
+        if (Str::contains($this->import->file_path, '.csv')) {
+            $source = new CSVSource(
+                $this->import->file_path,
+                $this->import->field_separator,
+            );
+        } else {
+            $source = new ExcelSource(
                 $this->import->file_path,
                 $this->import->field_separator,
             );
         }
 
-        if (Str::endsWith($this->import->file_path, '.xml')) {
-            return new XMLSource(
-                $this->import->file_path,
-                $this->import->field_separator,
-            );
-        }
-
-        if (Str::endsWith($this->import->file_path, '.xls')) {
-            return new XLSSource(
-                $this->import->file_path,
-                $this->import->field_separator,
-            );
-        }
-
-        if (Str::endsWith($this->import->file_path, '.xlsx')) {
-            return new XLSXSource(
-                $this->import->file_path,
-                $this->import->field_separator,
-            );
-        }
-
-        throw new \InvalidArgumentException("Unsupported file type: {$this->import->file_path}");
+        return $source;
     }
 
     /**
-     * Validates import and returns validation result.
+     * Validates import and returns validation result
      */
     public function validate(): bool
     {
@@ -231,7 +193,7 @@ class Import
     }
 
     /**
-     * Starts import process.
+     * Starts import process
      */
     public function isValid(): bool
     {
@@ -247,7 +209,7 @@ class Import
     }
 
     /**
-     * Check if error limit has been exceeded.
+     * Check if error limit has been exceeded
      */
     public function isErrorLimitExceeded(): bool
     {
@@ -262,7 +224,7 @@ class Import
     }
 
     /**
-     * Starts import process.
+     * Starts import process
      */
     public function start(?ImportBatchContract $importBatch = null): bool
     {
@@ -290,7 +252,7 @@ class Import
     }
 
     /**
-     * Link import resources.
+     * Link import resources
      */
     public function link(ImportBatchContract $importBatch): bool
     {
@@ -318,7 +280,7 @@ class Import
     }
 
     /**
-     * Index import resources.
+     * Index import resources
      */
     public function index(ImportBatchContract $importBatch): bool
     {
@@ -346,7 +308,7 @@ class Import
     }
 
     /**
-     * Started the import process.
+     * Started the import process
      */
     public function started(): void
     {
@@ -362,7 +324,7 @@ class Import
     }
 
     /**
-     * Started the import linking process.
+     * Started the import linking process
      */
     public function linking(): void
     {
@@ -376,7 +338,7 @@ class Import
     }
 
     /**
-     * Started the import indexing process.
+     * Started the import indexing process
      */
     public function indexing(): void
     {
@@ -390,7 +352,7 @@ class Import
     }
 
     /**
-     * Start the import process.
+     * Start the import process
      */
     public function completed(): void
     {
@@ -417,7 +379,7 @@ class Import
     }
 
     /**
-     * Returns import stats.
+     * Returns import stats
      */
     public function stats(string $state): array
     {
@@ -457,7 +419,7 @@ class Import
     }
 
     /**
-     * Return all error grouped by error code.
+     * Return all error grouped by error code
      */
     public function getFormattedErrors(): array
     {
@@ -477,19 +439,19 @@ class Import
     }
 
     /**
-     * Uploads error report and save the path to the database.
+     * Uploads error report and save the path to the database
      */
     public function uploadErrorReport(): ?string
     {
         /**
-         * Return null if there are no errors.
+         * Return null if there are no errors
          */
         if (! $this->errorHelper->getErrorsCount()) {
             return null;
         }
 
         /**
-         * Return null if there are no invalid rows.
+         * Return null if there are no invalid rows
          */
         if (! $this->errorHelper->getInvalidRowsCount()) {
             return null;
@@ -497,13 +459,80 @@ class Import
 
         $errors = $this->errorHelper->getAllErrors();
 
-        return $this->getTypeImporter()
-            ->getSource()
-            ->generateErrorReport($errors);
+        $source = $this->getTypeImporter()->getSource();
+
+        $source->rewind();
+
+        $spreadsheet = new Spreadsheet;
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        /**
+         * Add headers with extra error column
+         */
+        $sheet->fromArray(
+            [array_merge($source->getColumnNames(), [
+                'error',
+            ])],
+            null,
+            'A1'
+        );
+
+        $rowNumber = 2;
+
+        while ($source->valid()) {
+            try {
+                $rowData = $source->current();
+            } catch (\InvalidArgumentException $e) {
+                $source->next();
+
+                continue;
+            }
+
+            $rowErrors = $errors[$source->getCurrentRowNumber()] ?? [];
+
+            if (! empty($rowErrors)) {
+                $rowErrors = Arr::pluck($rowErrors, 'message');
+            }
+
+            $rowData[] = implode('|', $rowErrors);
+
+            $sheet->fromArray([$rowData], null, 'A'.$rowNumber++);
+
+            $source->next();
+        }
+
+        $fileType = pathinfo($this->import->file_path, PATHINFO_EXTENSION);
+
+        switch ($fileType) {
+            case 'csv':
+                $writer = new Csv($spreadsheet);
+
+                $writer->setDelimiter($this->import->field_separator);
+
+                break;
+
+            case 'xls':
+                $writer = new Xls($spreadsheet);
+
+            case 'xlsx':
+                $writer = new Xlsx($spreadsheet);
+
+                break;
+
+            default:
+                throw new \InvalidArgumentException("Unsupported file type: $fileType");
+        }
+
+        $errorFilePath = 'imports/'.time().'-error-report.'.$fileType;
+
+        $writer->save(Storage::disk('private')->path($errorFilePath));
+
+        return $errorFilePath;
     }
 
     /**
-     * Validates source file and returns validation result.
+     * Validates source file and returns validation result
      */
     public function getTypeImporter(): AbstractImporter
     {
@@ -527,7 +556,7 @@ class Import
     }
 
     /**
-     * Is linking resource required for the import operation.
+     * Is linking resource required for the import operation
      */
     public function isLinkingRequired(): bool
     {
@@ -535,7 +564,7 @@ class Import
     }
 
     /**
-     * Is indexing resource required for the import operation.
+     * Is indexing resource required for the import operation
      */
     public function isIndexingRequired(): bool
     {

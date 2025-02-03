@@ -2,22 +2,21 @@
 
 namespace Webkul\Core\ImageCache;
 
-use Closure;
+use Config;
 use Illuminate\Http\Response as IlluminateResponse;
-use Illuminate\Support\Facades\Config;
 use Intervention\Image\ImageCacheController;
 
 class Controller extends ImageCacheController
 {
     /**
-     * Cache template.
+     * Cache template
      *
      * @var string
      */
     protected $template;
 
     /**
-     * Logo.
+     * Logo
      *
      * @var string
      */

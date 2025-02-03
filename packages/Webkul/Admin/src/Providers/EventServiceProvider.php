@@ -4,6 +4,7 @@ namespace Webkul\Admin\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Webkul\Admin\Listeners\Admin;
+use Webkul\Admin\Listeners\ChannelSettingsChange;
 use Webkul\Admin\Listeners\Customer;
 use Webkul\Admin\Listeners\Invoice;
 use Webkul\Admin\Listeners\Order;
@@ -18,14 +19,23 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        /**
+         * Customer related events.
+         */
         'customer.create.after' => [
             [Customer::class, 'afterCreated'],
         ],
 
+        /**
+         * Admin related events.
+         */
         'admin.password.update.after' => [
             [Admin::class, 'afterPasswordUpdated'],
         ],
 
+        /**
+         * Sales related events.
+         */
         'checkout.order.save.after' => [
             [Order::class, 'afterCreated'],
         ],
@@ -44,6 +54,13 @@ class EventServiceProvider extends ServiceProvider
 
         'sales.refund.save.after' => [
             [Refund::class, 'afterCreated'],
+        ],
+
+        /**
+         * Channel Settings related events.
+         */
+        'core.channel.update.after' => [
+            [ChannelSettingsChange::class, 'checkForMaintenanceMode'],
         ],
     ];
 }

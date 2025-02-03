@@ -190,11 +190,6 @@ return [
                 'title'                   => 'Utwórz zamówienie dla :name',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => 'Brak',
-                        'total-amount' => 'Całkowita kwota',
-                    ],
-
                     'configurable' => [
                         'select-options' => 'Proszę wybrać opcję',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => 'Linki',
-                    ],
-
-                    'virtual' => [
-                        'none'         => 'Brak',
-                        'total-amount' => 'Całkowita kwota',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => 'Dodaj opcję',
-                            'empty-info'        => 'Aby szybko utworzyć opcje konfigurowalne.',
-                            'empty-title'       => 'Dodaj opcję',
-                            'info'              => 'To dostosuje prosty produkt.',
-                            'title'             => 'Element konfigurowalny',
-
-                            'update-create' => [
-                                'is-required'               => 'Wymagane',
-                                'max-characters'            => 'Maksymalna liczba znaków',
-                                'name'                      => 'Tytuł',
-                                'no'                        => 'Nie',
-                                'price'                     => 'Cena',
-                                'save-btn'                  => 'Zapisz',
-                                'supported-file-extensions' => 'Obsługiwane rozszerzenia plików',
-                                'title'                     => 'Opcja',
-                                'type'                      => 'Typ',
-                                'yes'                       => 'Tak',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => 'Dodaj opcję',
-                                'delete'      => 'Usuń',
-                                'delete-btn'  => 'Usuń',
-                                'edit-btn'    => 'Edytuj',
-                                'empty-info'  => 'Aby szybko utworzyć różne kombinacje produktów.',
-                                'empty-title' => 'Dodaj opcję',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => 'Tekst',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => 'Obszar tekstu',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => 'Pole wyboru',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => 'Radio',
-                                    ],
-
-                                    'select' => [
-                                        'title' => 'Wybierz',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => 'Wielokrotny wybór',
-                                    ],
-
-                                    'date' => [
-                                        'title' => 'Data',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => 'Data i czas',
-                                    ],
-
-                                    'time' => [
-                                        'title' => 'Czas',
-                                    ],
-
-                                    'file' => [
-                                        'title' => 'Plik',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => 'Etykieta',
-                                        'price'    => 'Cena',
-                                        'save-btn' => 'Zapisz',
-                                        'title'    => 'Opcja',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => 'Produkt jest już powiązany z produktem konfigurowalnym, zgrupowanym lub zestawem.',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => 'Dodaj wariant',
                         'delete-btn'        => 'Usuń',
@@ -2627,6 +2530,7 @@ return [
                     'general'           => 'Ogólne',
                     'group-separator'   => 'Separator Grup',
                     'name'              => 'Nazwa',
+                    'separator-note'    => 'Pole :attribute może akceptować tylko operatory przecinka (,) i kropki (.)',
                     'save-btn'          => 'Zapisz Walutę',
                     'symbol'            => 'Symbol',
                     'title'             => 'Utwórz nową Walutę',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => 'Motywy',
 
                 'datagrid' => [
-                    'active'       => 'Aktywny',
-                    'channel_name' => 'Nazwa kanału',
-                    'delete'       => 'Usuń',
-                    'id'           => 'ID',
-                    'inactive'     => 'Nieaktywny',
-                    'name'         => 'Nazwa',
-                    'sort-order'   => 'Kolejność sortowania',
-                    'status'       => 'Status',
-                    'theme'        => 'Temat',
-                    'type'         => 'Typ',
-                    'view'         => 'Widok',
+                    'active'        => 'Aktywny',
+                    'channel_name'  => 'Nazwa kanału',
+                    'change-status' => 'Zmień status',
+                    'delete'        => 'Usuń',
+                    'id'            => 'ID',
+                    'inactive'      => 'Nieaktywny',
+                    'name'          => 'Nazwa',
+                    'sort-order'    => 'Kolejność sortowania',
+                    'status'        => 'Status',
+                    'theme'         => 'Temat',
+                    'type'          => 'Typ',
+                    'view'          => 'Widok',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'Vicuna',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => 'Ustaw opcje mapy witryny.',
-                    'title' => 'Mapa witryny',
-
-                    'settings' => [
-                        'enabled' => 'Włączone',
-                        'info'    => 'Włącz lub wyłącz mapę witryny dla swojej strony internetowej, aby poprawić optymalizację wyszukiwarek i poprawić doświadczenia użytkowników.',
-                        'title'   => 'Ustawienia',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => 'Ustaw opcje limitów plików.',
-                        'max-file-size'    => 'Maksymalny rozmiar pliku',
-                        'max-url-per-file' => 'Maksymalna liczba URL na plik',
-                        'title'            => 'Limity plików',
-                    ],
-
-                    'store-url' => [
-                        'info'  => 'Ustaw opcje częstotliwości i priorytetu dla adresu URL sklepu.',
-
-                        'frequency' => [
-                            'title' => 'Częstotliwość',
-
-                            'options' => [
-                                'always'  => 'Zawsze',
-                                'daily'   => 'Codziennie',
-                                'hourly'  => 'Co godzinę',
-                                'monthly' => 'Miesięcznie',
-                                'never'   => 'Nigdy',
-                                'weekly'  => 'Cotygodniowo',
-                                'yearly'  => 'Co roku',
-                            ],
-                        ],
-
-                        'title'    => 'Adres URL sklepu',
-                        'priority' => 'Priorytet',
-                    ],
-
-                    'categories' => [
-                        'info'  => 'Ustaw opcje częstotliwości i priorytetu dla kategorii.',
-
-                        'frequency' => [
-                            'title' => 'Częstotliwość',
-
-                            'options' => [
-                                'always'  => 'Zawsze',
-                                'daily'   => 'Codziennie',
-                                'hourly'  => 'Co godzinę',
-                                'monthly' => 'Miesięcznie',
-                                'never'   => 'Nigdy',
-                                'weekly'  => 'Cotygodniowo',
-                                'yearly'  => 'Co roku',
-                            ],
-                        ],
-
-                        'title'    => 'Kategorie',
-                        'priority' => 'Priorytet',
-                    ],
-
-                    'products' => [
-                        'info'  => 'Ustaw opcje częstotliwości i priorytetu dla produktów.',
-
-                        'frequency' => [
-                            'title' => 'Częstotliwość',
-
-                            'options' => [
-                                'always'  => 'Zawsze',
-                                'daily'   => 'Codziennie',
-                                'hourly'  => 'Co godzinę',
-                                'monthly' => 'Miesięcznie',
-                                'never'   => 'Nigdy',
-                                'weekly'  => 'Cotygodniowo',
-                                'yearly'  => 'Co roku',
-                            ],
-                        ],
-
-                        'title'    => 'Produkty',
-                        'priority' => 'Priorytet',
-                    ],
-
-                    'cms' => [
-                        'info'  => 'Ustaw opcje częstotliwości i priorytetu dla stron CMS.',
-
-                        'frequency' => [
-                            'title' => 'Częstotliwość',
-
-                            'options' => [
-                                'always'  => 'Zawsze',
-                                'daily'   => 'Codziennie',
-                                'hourly'  => 'Co godzinę',
-                                'monthly' => 'Miesięcznie',
-                                'never'   => 'Nigdy',
-                                'weekly'  => 'Cotygodniowo',
-                                'yearly'  => 'Co roku',
-                            ],
-                        ],
-
-                        'title'    => 'Strony CMS',
-                        'priority' => 'Priorytet',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => 'Zezwalaj na recenzje klientów',
-                        'allow-guest-review'      => 'Zezwalaj na recenzje gości',
-                        'censoring-reviewer-name' => 'Cenzurowanie Nazwy Recenzenta',
-                        'display-review-count'    => 'Wyświetl liczbę recenzji dla ocen.',
-                        'display-star-count'      => 'Wyświetl liczbę gwiazdek w ocenach.',
-                        'summary'                 => 'Streszczenie',
-                        'title'                   => 'Recenzja',
-                        'title-info'              => 'Ocena lub ocena czegoś, często obejmująca opinie i informacje zwrotne.',
+                        'allow-customer-review' => 'Zezwalaj na recenzje klientów',
+                        'allow-guest-review'    => 'Zezwalaj na recenzje gości',
+                        'display-review-count'  => 'Wyświetl liczbę recenzji dla ocen.',
+                        'display-star-count'    => 'Wyświetl liczbę gwiazdek w ocenach.',
+                        'summary'               => 'Streszczenie',
+                        'title'                 => 'Recenzja',
+                        'title-info'            => 'Ocena lub ocena czegoś, często obejmująca opinie i informacje zwrotne.',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => 'Tekst stopki',
-                        'footer-text-info' => 'Wprowadź tekst, który pojawi się w stopce pliku PDF.',
                         'info'             => 'Skonfiguruj wydruki PDF, aby wyświetlały identyfikator faktury, identyfikator zamówienia w nagłówku i zawierały logo faktury.',
                         'invoice-id-info'  => 'Skonfiguruj wyświetlanie identyfikatora faktury w nagłówku faktury.',
                         'invoice-id-title' => 'Wyświetl identyfikator faktury w nagłówku',

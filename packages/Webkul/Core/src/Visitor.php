@@ -17,15 +17,16 @@ class Visitor extends BaseVisitor
     {
         foreach ($this->except as $path) {
             if ($this->request->is($path)) {
+                dd(1);
+
                 return;
             }
         }
-
         UpdateCreateVisitIndex::dispatch($model, $this->prepareLog());
     }
 
     /**
-     * Retrieve request's url.
+     * Retrieve request's url
      */
     public function url(): string
     {
@@ -46,7 +47,7 @@ class Visitor extends BaseVisitor
     }
 
     /**
-     * Returns logs.
+     * Returns logs
      *
      * @return array
      */

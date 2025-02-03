@@ -261,9 +261,7 @@ class Cart
             $this->createCart([]);
         }
 
-        $cartProducts = $product->getTypeInstance()->prepareForCart(array_merge([
-            'cart_id' => $this->cart->id,
-        ], $data));
+        $cartProducts = $product->getTypeInstance()->prepareForCart($data);
 
         if (is_string($cartProducts)) {
             if (! $this->cart->all_items->count()) {

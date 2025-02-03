@@ -225,22 +225,23 @@
         
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            <!-- Modal Submission -->
                             <div class="flex items-center gap-x-2.5">
-                                <!-- Delete Button -->
-                                <x-admin::button
-                                    button-type="button"
+                                <button
+                                    type="button"
                                     class="cursor-pointer whitespace-nowrap rounded-md border-2 border-transparent px-3 py-1.5 font-semibold text-red-600 transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
-                                    :title="trans('admin::app.catalog.products.edit.price.group.create.delete-btn')"
-                                    v-if="selectedPrice.id"
                                     @click="remove"
-                                />
+                                    v-if="selectedPrice.id"
+                                >
+                                    @lang('admin::app.catalog.products.edit.price.group.create.delete-btn')
+                                </button>
 
-                                <!-- Save Button -->
-                                <x-admin::button
-                                    button-type="button"
+                                <button 
+                                    type="submit"
                                     class="primary-button"
-                                    :title="trans('admin::app.catalog.products.edit.price.group.create.save-btn')"
-                                />
+                                >
+                                    @lang('admin::app.catalog.products.edit.price.group.create.save-btn')
+                                </button>
                             </div>
                         </x-slot>
                     </x-admin::modal>

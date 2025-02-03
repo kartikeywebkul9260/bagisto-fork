@@ -241,14 +241,14 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
-                            <!-- Save Button -->
-                            <x-admin::button
-                                button-type="submit"
-                                class="primary-button"
-                                :title="trans('admin::app.settings.themes.create.save-btn')"
-                                ::loading="isLoading"
-                                ::disabled="isLoading"
-                            />
+                            <div class="flex items-center gap-x-2.5">
+                                <button
+                                    type="submit"
+                                    class="primary-button"
+                                >
+                                    @lang('admin::app.settings.taxes.categories.index.create.save-btn')
+                                </button>
+                            </div>
                         </x-slot>
                     </x-admin::modal>
                 </form>
@@ -266,8 +266,6 @@
                         selectedTaxRates: {},
 
                         selectedTaxCategories: 0,
-
-                        isLoading: false,
                     }
                 },
 
@@ -289,8 +287,6 @@
 
                 methods: {
                     updateOrCreate(params, { resetForm, setErrors }) {
-                        this.isLoading = true;
-
                         let formData = new FormData(this.$refs.taxCategoryCreateForm);
 
                         if (params.id) {
@@ -303,8 +299,6 @@
                                 }
                             })
                             .then((response) => {
-                                this.isLoading = false;
-
                                 this.$refs.taxCategory.toggle();
 
                                 this.$refs.datagrid.get();
@@ -313,8 +307,7 @@
 
                                 this.selectedTaxRates = {};
                             })
-                            .catch((error) => {
-                                this.isLoading = false;
+                            .catch((error) =>{
                                 if (error.response.status == 422) {
                                     setErrors(error.response.data.errors);
                                 }

@@ -2,8 +2,8 @@
 
 namespace Webkul\Core\Exceptions;
 
+use App\Exceptions\Handler as BaseHandler;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Exceptions\Handler as BaseHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -32,16 +32,16 @@ class Handler extends BaseHandler
     /**
      * Handle the authentication exception.
      */
-    protected function handleAuthenticationException(): void
+    private function handleAuthenticationException(): void
     {
         $this->renderable(function (AuthenticationException $exception, Request $request) {
-            $namespace = $request->is(config('app.admin_url').'/*') ? 'admin' : 'shop';
+            $path = $request->is(config('app.admin_url').'/*') ? 'admin' : 'shop';
 
             if ($request->wantsJson()) {
-                return response()->json(['error' => trans("{$namespace}::app.errors.401.description")], 401);
+                return response()->json(['error' => trans("{$path}::app.errors.401.description")], 401);
             }
 
-            if ($namespace !== 'admin') {
+            if ($path !== 'admin') {
                 return redirect()->guest(route('shop.customer.session.index'));
             }
 
@@ -52,10 +52,10 @@ class Handler extends BaseHandler
     /**
      * Handle the http exceptions.
      */
-    protected function handleHttpException(): void
+    private function handleHttpException(): void
     {
         $this->renderable(function (HttpException $exception, Request $request) {
-            $namespace = $request->is(config('app.admin_url').'/*') ? 'admin' : 'shop';
+            $path = $request->is(config('app.admin_url').'/*') ? 'admin' : 'shop';
 
             $errorCode = in_array($exception->getStatusCode(), [401, 403, 404, 503])
                 ? $exception->getStatusCode()
@@ -63,43 +63,43 @@ class Handler extends BaseHandler
 
             if ($request->wantsJson()) {
                 return response()->json([
-                    'error'       => trans("{$namespace}::app.errors.{$errorCode}.title"),
-                    'description' => trans("{$namespace}::app.errors.{$errorCode}.description"),
+                    'error'       => trans("{$path}::app.errors.{$errorCode}.title"),
+                    'description' => trans("{$path}::app.errors.{$errorCode}.description"),
                 ], $errorCode);
             }
 
-            return response()->view("{$namespace}::errors.index", compact('errorCode'));
-        });
-    }
-
-    /**
-     * Handle validation exceptions.
-     */
-    protected function handleValidationException(): void
-    {
-        $this->renderable(function (ValidationException $exception, Request $request) {
-            return parent::convertValidationExceptionToResponse($exception, $request);
+            return response()->view("{$path}::errors.index", compact('errorCode'));
         });
     }
 
     /**
      * Handle the server exceptions.
      */
-    protected function handleServerException(): void
+    private function handleServerException(): void
     {
         $this->renderable(function (Throwable $throwable, Request $request) {
-            $namespace = $request->is(config('app.admin_url').'/*') ? 'admin' : 'shop';
+            $path = $request->is(config('app.admin_url').'/*') ? 'admin' : 'shop';
 
             $errorCode = 500;
 
             if ($request->wantsJson()) {
                 return response()->json([
-                    'error'       => trans("{$namespace}::app.errors.{$errorCode}.title"),
-                    'description' => trans("{$namespace}::app.shop.errors.{$errorCode}.description"),
+                    'error'       => trans("{$path}::app.errors.{$errorCode}.title"),
+                    'description' => trans("{$path}::app.shop.errors.{$errorCode}.description"),
                 ], $errorCode);
             }
 
-            return response()->view("{$namespace}::errors.index", compact('errorCode'));
+            return response()->view("{$path}::errors.index", compact('errorCode'));
+        });
+    }
+
+    /**
+     * Handle validation exceptions.
+     */
+    private function handleValidationException(): void
+    {
+        $this->renderable(function (ValidationException $exception, Request $request) {
+            return parent::convertValidationExceptionToResponse($exception, $request);
         });
     }
 }

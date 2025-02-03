@@ -161,14 +161,16 @@
 
                     <!-- Modal Footer -->
                     <x-slot:footer>
-                        <!-- Save Button -->
-                        <x-admin::button
-                            button-type="button"
-                            class="primary-button"
-                            :title="trans('admin::app.components.media.images.ai-generation.apply')"
-                            ::disabled="! ai.content"
-                            @click="apply"
-                        />
+                        <div class="flex items-center gap-x-2.5">
+                            <button
+                                type="button"
+                                class="primary-button"
+                                :disabled="!ai.content"
+                                @click="apply"
+                            >
+                                @lang('admin::app.components.tinymce.ai-generation.apply')
+                            </button>
+                        </div>
                     </x-slot>
                 </x-admin::modal>
             </form>

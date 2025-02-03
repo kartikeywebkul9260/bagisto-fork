@@ -190,11 +190,6 @@ return [
                 'title'                   => 'צור הזמנה עבור :name',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => 'ללא',
-                        'total-amount' => 'סכום כולל',
-                    ],
-
                     'configurable' => [
                         'select-options' => 'בחר אפשרות',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => 'קישורים',
-                    ],
-
-                    'virtual' => [
-                        'none'         => 'ללא',
-                        'total-amount' => 'סכום כולל',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => 'הוסף אפשרות',
-                            'empty-info'        => 'ליצירת אפשרויות מותאמות אישית במהירות.',
-                            'empty-title'       => 'הוסף אפשרות',
-                            'info'              => 'זה יתאים אישית את המוצר הפשוט.',
-                            'title'             => 'פריט ניתן להתאמה אישית',
-
-                            'update-create' => [
-                                'is-required'               => 'נדרש',
-                                'max-characters'            => 'מקסימום תווים',
-                                'name'                      => 'כותרת',
-                                'no'                        => 'לא',
-                                'price'                     => 'מחיר',
-                                'save-btn'                  => 'שמור',
-                                'supported-file-extensions' => 'סיומות קבצים נתמכות',
-                                'title'                     => 'אפשרות',
-                                'type'                      => 'סוג',
-                                'yes'                       => 'כן',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => 'הוסף אפשרות',
-                                'delete'      => 'מחק',
-                                'delete-btn'  => 'מחק',
-                                'edit-btn'    => 'ערוך',
-                                'empty-info'  => 'ליצירת שילובים שונים של מוצרים במהירות.',
-                                'empty-title' => 'הוסף אפשרות',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => 'טקסט',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => 'אזור טקסט',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => 'תיבת סימון',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => 'רדיו',
-                                    ],
-
-                                    'select' => [
-                                        'title' => 'בחר',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => 'רב-בחירה',
-                                    ],
-
-                                    'date' => [
-                                        'title' => 'תאריך',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => 'תאריך ושעה',
-                                    ],
-
-                                    'time' => [
-                                        'title' => 'זמן',
-                                    ],
-
-                                    'file' => [
-                                        'title' => 'קובץ',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => 'תווית',
-                                        'price'    => 'מחיר',
-                                        'save-btn' => 'שמור',
-                                        'title'    => 'אפשרות',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => 'המוצר כבר מקושר למוצר ניתן להתאמה, מקובץ או בחבילה.',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => 'הוסף נציג',
                         'delete-btn'        => 'מחק',
@@ -2627,6 +2530,7 @@ return [
                     'general'           => 'כללי',
                     'group-separator'   => 'מפריד קבוצה',
                     'name'              => 'שם',
+                    'separator-note'    => 'השדה :attribute יכול לקבל רק את המפעילים פסיק (,) ונקודה (.)',
                     'save-btn'          => 'שמור מטבע',
                     'symbol'            => 'סמל',
                     'title'             => 'צור מטבע חדש',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => 'ערכות עיצוב',
 
                 'datagrid' => [
-                    'active'       => 'פעיל',
-                    'channel_name' => 'שם הערוץ',
-                    'delete'       => 'מחק',
-                    'id'           => 'מזהה',
-                    'inactive'     => 'לא פעיל',
-                    'name'         => 'שם',
-                    'sort-order'   => 'סדר מיון',
-                    'status'       => 'סטטוס',
-                    'theme'        => 'נושא',
-                    'type'         => 'סוג',
-                    'view'         => 'הצג',
+                    'active'        => 'פעיל',
+                    'channel_name'  => 'שם הערוץ',
+                    'change-status' => 'שנה סטטוס',
+                    'delete'        => 'מחק',
+                    'id'            => 'מזהה',
+                    'inactive'      => 'לא פעיל',
+                    'name'          => 'שם',
+                    'sort-order'    => 'סדר מיון',
+                    'status'        => 'סטטוס',
+                    'theme'         => 'נושא',
+                    'type'          => 'סוג',
+                    'view'          => 'הצג',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'ויקונה',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => 'הגדר אפשרויות מפת אתר.',
-                    'title' => 'מפת אתר',
-
-                    'settings' => [
-                        'enabled' => 'מופעל',
-                        'info'    => 'הפעל או השבת את מפת האתר לאתר שלך כדי לשפר את אופטימיזציית מנועי החיפוש ולשפר את חוויית המשתמש.',
-                        'title'   => 'הגדרות',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => 'הגדר אפשרויות גבולות קובץ.',
-                        'max-file-size'    => 'גודל קובץ מרבי',
-                        'max-url-per-file' => 'מספר מרבי של כתובות URL לכל קובץ',
-                        'title'            => 'גבולות קובץ',
-                    ],
-
-                    'store-url' => [
-                        'info'  => 'הגדר אפשרויות תדירות ועדיפות לכתובת ה-URL של החנות.',
-
-                        'frequency' => [
-                            'title' => 'תדירות',
-
-                            'options' => [
-                                'always'  => 'תמיד',
-                                'daily'   => 'יומי',
-                                'hourly'  => 'כל שעה',
-                                'monthly' => 'חודשי',
-                                'never'   => 'אף פעם',
-                                'weekly'  => 'שבועי',
-                                'yearly'  => 'שנתי',
-                            ],
-                        ],
-
-                        'title'    => 'כתובת ה-URL של החנות',
-                        'priority' => 'עדיפות',
-                    ],
-
-                    'categories' => [
-                        'info'  => 'הגדר אפשרויות תדירות ועדיפות לקטגוריות.',
-
-                        'frequency' => [
-                            'title' => 'תדירות',
-
-                            'options' => [
-                                'always'  => 'תמיד',
-                                'daily'   => 'יומי',
-                                'hourly'  => 'כל שעה',
-                                'monthly' => 'חודשי',
-                                'never'   => 'אף פעם',
-                                'weekly'  => 'שבועי',
-                                'yearly'  => 'שנתי',
-                            ],
-                        ],
-
-                        'title'    => 'קטגוריות',
-                        'priority' => 'עדיפות',
-                    ],
-
-                    'products' => [
-                        'info'  => 'הגדר אפשרויות תדירות ועדיפות למוצרים.',
-
-                        'frequency' => [
-                            'title' => 'תדירות',
-
-                            'options' => [
-                                'always'  => 'תמיד',
-                                'daily'   => 'יומי',
-                                'hourly'  => 'כל שעה',
-                                'monthly' => 'חודשי',
-                                'never'   => 'אף פעם',
-                                'weekly'  => 'שבועי',
-                                'yearly'  => 'שנתי',
-                            ],
-                        ],
-
-                        'title'    => 'מוצרים',
-                        'priority' => 'עדיפות',
-                    ],
-
-                    'cms' => [
-                        'info'  => 'הגדר אפשרויות תדירות ועדיפות לעמודי CMS.',
-
-                        'frequency' => [
-                            'title' => 'תדירות',
-
-                            'options' => [
-                                'always'  => 'תמיד',
-                                'daily'   => 'יומי',
-                                'hourly'  => 'כל שעה',
-                                'monthly' => 'חודשי',
-                                'never'   => 'אף פעם',
-                                'weekly'  => 'שבועי',
-                                'yearly'  => 'שנתי',
-                            ],
-                        ],
-
-                        'title'    => 'עמודי CMS',
-                        'priority' => 'עדיפות',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => 'אפשר ביקורת מלקוח',
-                        'allow-guest-review'      => 'אפשר ביקורת מאורח',
-                        'censoring-reviewer-name' => 'צנזור שם המבקר',
-                        'display-review-count'    => 'הצג את ספירת הביקורות עבור דירוגים.',
-                        'display-star-count'      => 'הצג את ספירת הכוכבים בדירוגים.',
-                        'summary'                 => 'סיכום',
-                        'title'                   => 'ביקורת',
-                        'title-info'              => 'הערכה או הערכה של משהו, הכוללת לעיתים דעות ומשוב.',
+                        'allow-customer-review' => 'אפשר ביקורת מלקוח',
+                        'allow-guest-review'    => 'אפשר ביקורת מאורח',
+                        'display-review-count'  => 'הצג את ספירת הביקורות עבור דירוגים.',
+                        'display-star-count'    => 'הצג את ספירת הכוכבים בדירוגים.',
+                        'summary'               => 'סיכום',
+                        'title'                 => 'ביקורת',
+                        'title-info'            => 'הערכה או הערכה של משהו, הכוללת לעיתים דעות ומשוב.',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => 'טקסט תחתון',
-                        'footer-text-info' => 'הזן את הטקסט שיופיע בכותרת התחתונה של ה-PDF.',
                         'info'             => 'הגדרות הדפסת PDF להצגת מזהה חשבונית, מזהה הזמנה בכותרת וכלול את לוגו החשבונית.',
                         'invoice-id-info'  => 'הגדרת הצגת מזהה חשבונית בכותרת החשבונית.',
                         'invoice-id-title' => 'הצג מזהה חשבונית בכותרת',

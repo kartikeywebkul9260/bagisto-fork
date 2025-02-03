@@ -2,27 +2,19 @@
 
 namespace Webkul\Admin\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Webkul\Core\Http\Middleware\PreventRequestsDuringMaintenance;
 
 class AdminServiceProvider extends ServiceProvider
 {
     /**
-     * Register services.
-     */
-    public function register(): void
-    {
-        $this->registerConfig();
-    }
-
-    /**
      * Bootstrap services.
      */
-    public function boot(): void
+    public function boot(Router $router): void
     {
-        Route::middleware(['web', PreventRequestsDuringMaintenance::class])->group(__DIR__.'/../Routes/web.php');
+        Route::middleware('web')->group(__DIR__.'/../Routes/web.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'admin');
 
@@ -31,6 +23,14 @@ class AdminServiceProvider extends ServiceProvider
         Blade::anonymousComponentPath(__DIR__.'/../Resources/views/components', 'admin');
 
         $this->app->register(EventServiceProvider::class);
+    }
+
+    /**
+     * Register services.
+     */
+    public function register(): void
+    {
+        $this->registerConfig();
     }
 
     /**

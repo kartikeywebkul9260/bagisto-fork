@@ -568,13 +568,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'Hiçbiri',
-                        'total-amount' => 'Toplam Tutar',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'Lütfen bir seçenek seçin',
                     'select-above-options' => 'Lütfen yukarıdaki seçenekleri seçin',
@@ -881,11 +874,8 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'Kategoriler Karuseli',
-            'image-carousel'      => 'Görüntü Karuseli',
-            'offer'               => 'İlk siparişinizde %40’a kadar indirim kazanın, ŞİMDİ ALIŞVERİŞ YAPIN',
-            'product-carousel'    => 'Ürün Karuseli',
-            'resend-verify-email' => 'Doğrulama e-postasını yeniden gönder',
+            'offer'               => '1. siparişinizde %40\'a varan İNDİRİM ALIŞVERİŞ YAPIN',
+            'resend-verify-email' => 'Doğrulama E-postası Tekrar Gönder',
             'verify-email'        => 'E-posta hesabınızı doğrulayın',
         ],
 
@@ -894,9 +884,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'Sonraki Sayfa',
             'pagination-showing' => 'Toplam :total girdinin :firstItem ile :lastItem arası gösteriliyor',
-            'prev-page'          => 'Önceki Sayfa',
         ],
     ],
 

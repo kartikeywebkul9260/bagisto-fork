@@ -265,12 +265,11 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
-                            <!-- Save Button -->
                             <x-admin::button
                                 class="primary-button"
                                 :title="trans('admin::app.sales.orders.create.cart.summary.apply-coupon')"
-                                ::loading="isLoading"
-                                ::disabled="isLoading"
+                                ::loading="isStoring"
+                                ::disabled="isStoring"
                             />
                         </x-slot>
                     </x-admin::modal>
@@ -297,7 +296,7 @@
                         shipping: "{{ core()->getConfigData('sales.taxes.shopping_cart.display_shipping_amount') }}",
                     },
                     
-                    isLoading: false,
+                    isStoring: false,
 
                     isPlacingOrder: false,
                 }
@@ -305,11 +304,11 @@
 
             methods: {
                 applyCoupon(params, { resetForm }) {
-                    this.isLoading = true;
+                    this.isStoring = true;
 
                     this.$axios.post("{{ route('admin.sales.cart.store_coupon', $cart->id) }}", params)
                         .then((response) => {
-                            this.isLoading = false;
+                            this.isStoring = false;
 
                             this.$emit('coupon-applied', response.data.data);
                   
@@ -320,7 +319,7 @@
                             resetForm();
                         })
                         .catch((error) => {
-                            this.isLoading = false;
+                            this.isStoring = false;
 
                             this.$refs.couponModel.toggle();
 

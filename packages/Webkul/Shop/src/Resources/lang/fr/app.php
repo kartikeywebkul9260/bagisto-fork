@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'Aucun',
-                        'total-amount' => 'Montant total',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'Veuillez sélectionner une option',
                     'select-above-options' => 'Veuillez sélectionner les options ci-dessus',
@@ -880,12 +873,9 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'Carrousel de catégories',
-            'image-carousel'      => 'Carrousel d\'images',
-            'offer'               => 'Obtenez JUSQU\'À 40% DE RÉDUCTION sur votre 1ère commande, ACHETEZ MAINTENANT',
-            'product-carousel'    => 'Carrousel de produits',
+            'offer'               => 'Profitez de jusqu\'à 40% de réduction sur votre 1ère commande. FAITES VOS ACHATS MAINTENANT',
             'resend-verify-email' => 'Renvoyer l\'e-mail de vérification',
-            'verify-email'        => 'Vérifiez votre compte e-mail',
+            'verify-email'        => 'Vérifiez votre adresse e-mail',
         ],
 
         'thanks-for-contact' => 'Merci de nous contacter avec vos commentaires et questions. Nous vous répondrons très bientôt.',
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'Page suivante',
             'pagination-showing' => 'Affichage de :firstItem à :lastItem sur :total entrées',
-            'prev-page'          => 'Page précédente',
         ],
     ],
 

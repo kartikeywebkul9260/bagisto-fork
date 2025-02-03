@@ -1,6 +1,5 @@
 <?php
 
-use Webkul\Theme\Facades\Themes;
 use Webkul\Theme\ViewRenderEventManager;
 
 if (! function_exists('themes')) {
@@ -11,7 +10,7 @@ if (! function_exists('themes')) {
      */
     function themes()
     {
-        return Themes::getFacadeRoot();
+        return app()->make('themes');
     }
 }
 

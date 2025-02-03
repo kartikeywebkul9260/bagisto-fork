@@ -172,6 +172,8 @@ abstract class AbstractType
 
         $lastPrice = $this->product->price;
 
+        $lastCustomerGroupId = null;
+
         foreach ($customerGroupPrices as $customerGroupPrice) {
             if (
                 $customerGroupPrice->qty > $qty
@@ -188,6 +190,8 @@ abstract class AbstractType
                     $lastPrice = $this->product->price - ($this->product->price * $customerGroupPrice->value) / 100;
 
                     $lastQty = $customerGroupPrice->qty;
+
+                    $lastCustomerGroupId = $customerGroupPrice->customer_group_id;
                 }
             } else {
                 if (
@@ -197,6 +201,8 @@ abstract class AbstractType
                     $lastPrice = $customerGroupPrice->value;
 
                     $lastQty = $customerGroupPrice->qty;
+
+                    $lastCustomerGroupId = $customerGroupPrice->customer_group_id;
                 }
             }
         }

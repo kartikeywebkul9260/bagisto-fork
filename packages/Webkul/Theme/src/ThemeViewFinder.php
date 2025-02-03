@@ -35,7 +35,7 @@ class ThemeViewFinder extends FileViewFinder
                 return $this->findInPaths($view, $paths);
             }
         } else {
-            $themes = themes();
+            $themes = app('themes');
 
             $themes->set(config('themes.admin-default'));
 

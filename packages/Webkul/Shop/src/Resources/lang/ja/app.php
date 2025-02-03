@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'なし',
-                        'total-amount' => '合計金額',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'オプションを選択してください',
                     'select-above-options' => '上記のオプションを選択してください',
@@ -880,12 +873,9 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'カテゴリカルーセル',
-            'image-carousel'      => '画像カルーセル',
-            'offer'               => '初回注文で最大40%オフ、今すぐ購入',
-            'product-carousel'    => '商品カルーセル',
+            'offer'               => '初めての注文で最大40%OFF 今すぐショッピング',
             'resend-verify-email' => '確認メールを再送信',
-            'verify-email'        => 'メールアカウントを確認してください',
+            'verify-email'        => 'メールアカウントを確認',
         ],
 
         'thanks-for-contact' => 'ご意見やご質問をお寄せいただきありがとうございます。返信いたしますので、しばらくお待ちください。',
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => '次のページ',
             'pagination-showing' => '合計 :total エントリのうち :firstItem から :lastItem を表示',
-            'prev-page'          => '前のページ',
         ],
     ],
 

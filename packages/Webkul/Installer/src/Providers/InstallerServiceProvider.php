@@ -12,14 +12,11 @@ use Webkul\Installer\Http\Middleware\Locale;
 class InstallerServiceProvider extends ServiceProvider
 {
     /**
-     * Register the service provider.
+     * Indicates if loading of the provider is deferred.
      *
-     * @return void
+     * @var bool
      */
-    public function register()
-    {
-        $this->registerCommands();
-    }
+    protected $defer = false;
 
     /**
      * Bootstrap the application events.
@@ -30,15 +27,25 @@ class InstallerServiceProvider extends ServiceProvider
     {
         $router->middlewareGroup('install', [CanInstall::class]);
 
-        $router->aliasMiddleware('installer_locale', Locale::class);
-
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'installer');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
 
+        $router->aliasMiddleware('installer_locale', Locale::class);
+
         Event::listen('bagisto.installed', 'Webkul\Installer\Listeners\Installer@installed');
+    }
+
+    /**
+     * Register the service provider
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->registerCommands();
     }
 
     /**

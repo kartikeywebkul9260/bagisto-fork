@@ -1,40 +1,34 @@
 <?php
 
-use Webkul\Product\Facades\ProductImage;
-use Webkul\Product\Facades\ProductVideo;
 use Webkul\Product\Helpers\Toolbar;
+use Webkul\Product\ProductImage;
+use Webkul\Product\ProductVideo;
 
 if (! function_exists('product_image')) {
     /**
      * Product image helper.
-     *
-     * @return \Webkul\Product\ProductImage
      */
-    function product_image()
+    function product_image(): ProductImage
     {
-        return ProductImage::getFacadeRoot();
+        return app()->make(ProductImage::class);
     }
 }
 
 if (! function_exists('product_video')) {
     /**
      * Product video helper.
-     *
-     * @return \Webkul\Product\ProductVideo
      */
-    function product_video()
+    function product_video(): ProductVideo
     {
-        return ProductVideo::getFacadeRoot();
+        return app()->make(ProductVideo::class);
     }
 }
 
 if (! function_exists('product_toolbar')) {
     /**
      * Product tolbar helper.
-     *
-     * @return \Webkul\Product\Helpers\Toolbar
      */
-    function product_toolbar()
+    function product_toolbar(): Toolbar
     {
         return app()->make(Toolbar::class);
     }

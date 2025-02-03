@@ -190,11 +190,6 @@ return [
                 'title'                   => ':name için Sipariş Oluştur',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => 'Yok',
-                        'total-amount' => 'Toplam Tutar',
-                    ],
-
                     'configurable' => [
                         'select-options' => 'Lütfen bir seçenek seçin',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => 'Bağlantılar',
-                    ],
-
-                    'virtual' => [
-                        'none'         => 'Yok',
-                        'total-amount' => 'Toplam Tutar',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => 'Seçenek ekle',
-                            'empty-info'        => 'Özelleştirilebilir seçenekler oluşturmak için.',
-                            'empty-title'       => 'Seçenek ekle',
-                            'info'              => 'Bu, basit ürünü özelleştirecektir.',
-                            'title'             => 'Özelleştirilebilir Öğe',
-
-                            'update-create' => [
-                                'is-required'               => 'Gerekli mi',
-                                'max-characters'            => 'Maksimum Karakter',
-                                'name'                      => 'Başlık',
-                                'no'                        => 'Hayır',
-                                'price'                     => 'Fiyat',
-                                'save-btn'                  => 'Kaydet',
-                                'supported-file-extensions' => 'Desteklenen Dosya Uzantıları',
-                                'title'                     => 'Seçenek',
-                                'type'                      => 'Tür',
-                                'yes'                       => 'Evet',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => 'Seçenek ekle',
-                                'delete'      => 'Sil',
-                                'delete-btn'  => 'Sil',
-                                'edit-btn'    => 'Düzenle',
-                                'empty-info'  => 'Çeşitli ürün kombinasyonları oluşturmak için.',
-                                'empty-title' => 'Seçenek ekle',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => 'Metin',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => 'Metin Alanı',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => 'Onay Kutusu',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => 'Radyo',
-                                    ],
-
-                                    'select' => [
-                                        'title' => 'Seç',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => 'Çoklu Seçim',
-                                    ],
-
-                                    'date' => [
-                                        'title' => 'Tarih',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => 'Tarih ve Saat',
-                                    ],
-
-                                    'time' => [
-                                        'title' => 'Saat',
-                                    ],
-
-                                    'file' => [
-                                        'title' => 'Dosya',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => 'Etiket',
-                                        'price'    => 'Fiyat',
-                                        'save-btn' => 'Kaydet',
-                                        'title'    => 'Seçenek',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => 'Bu ürün zaten başka bir ürünle ilişkilendirilmiş.',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => 'Çeşit Ekle',
                         'delete-btn'        => 'Sil',
@@ -2627,6 +2530,7 @@ return [
                     'general'           => 'Genel',
                     'group-separator'   => 'Grup Ayırıcı',
                     'name'              => 'Adı',
+                    'separator-note'    => ':attribute alanı yalnızca virgül (,) ve nokta (.) operatörlerini kabul edebilir',
                     'save-btn'          => 'Para Birimini Kaydet',
                     'symbol'            => 'Sembol',
                     'title'             => 'Yeni Para Birimi Oluştur',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => 'Temalar',
 
                 'datagrid' => [
-                    'active'       => 'Aktif',
-                    'channel_name' => 'Kanal Adı',
-                    'delete'       => 'Sil',
-                    'id'           => 'Kimlik',
-                    'inactive'     => 'Pasif',
-                    'name'         => 'Ad',
-                    'sort-order'   => 'Sıralama Sırası',
-                    'status'       => 'Durum',
-                    'theme'        => 'Tema',
-                    'type'         => 'Tür',
-                    'view'         => 'Görünüm',
+                    'active'        => 'Aktif',
+                    'channel_name'  => 'Kanal Adı',
+                    'change-status' => 'Durumu değiştir',
+                    'delete'        => 'Sil',
+                    'id'            => 'Kimlik',
+                    'inactive'      => 'Pasif',
+                    'name'          => 'Ad',
+                    'sort-order'    => 'Sıralama Sırası',
+                    'status'        => 'Durum',
+                    'theme'         => 'Tema',
+                    'type'          => 'Tür',
+                    'view'          => 'Görünüm',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'Vicuna',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => 'Site haritası seçeneklerini ayarlayın.',
-                    'title' => 'Site Haritası',
-
-                    'settings' => [
-                        'enabled' => 'Etkin',
-                        'info'    => 'Arama motoru optimizasyonunu iyileştirmek ve kullanıcı deneyimini artırmak için web siteniz için site haritasını etkinleştirin veya devre dışı bırakın.',
-                        'title'   => 'Ayarlar',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => 'Dosya limitleri seçeneklerini ayarlayın.',
-                        'max-file-size'    => 'Maksimum dosya boyutu',
-                        'max-url-per-file' => 'Dosya başına maksimum URL sayısı',
-                        'title'            => 'Dosya Limitleri',
-                    ],
-
-                    'store-url' => [
-                        'info'  => 'Mağaza URL\'si için frekans ve öncelik seçeneklerini ayarlayın.',
-
-                        'frequency' => [
-                            'title' => 'Frekans',
-
-                            'options' => [
-                                'always'  => 'Her zaman',
-                                'daily'   => 'Günlük',
-                                'hourly'  => 'Saatlik',
-                                'monthly' => 'Aylık',
-                                'never'   => 'Asla',
-                                'weekly'  => 'Haftalık',
-                                'yearly'  => 'Yıllık',
-                            ],
-                        ],
-
-                        'title'    => 'Mağaza URL\'si',
-                        'priority' => 'Öncelik',
-                    ],
-
-                    'categories' => [
-                        'info'  => 'Kategoriler için frekans ve öncelik seçeneklerini ayarlayın.',
-
-                        'frequency' => [
-                            'title' => 'Frekans',
-
-                            'options' => [
-                                'always'  => 'Her zaman',
-                                'daily'   => 'Günlük',
-                                'hourly'  => 'Saatlik',
-                                'monthly' => 'Aylık',
-                                'never'   => 'Asla',
-                                'weekly'  => 'Haftalık',
-                                'yearly'  => 'Yıllık',
-                            ],
-                        ],
-
-                        'title'    => 'Kategoriler',
-                        'priority' => 'Öncelik',
-                    ],
-
-                    'products' => [
-                        'info'  => 'Ürünler için frekans ve öncelik seçeneklerini ayarlayın.',
-
-                        'frequency' => [
-                            'title' => 'Frekans',
-
-                            'options' => [
-                                'always'  => 'Her zaman',
-                                'daily'   => 'Günlük',
-                                'hourly'  => 'Saatlik',
-                                'monthly' => 'Aylık',
-                                'never'   => 'Asla',
-                                'weekly'  => 'Haftalık',
-                                'yearly'  => 'Yıllık',
-                            ],
-                        ],
-
-                        'title'    => 'Ürünler',
-                        'priority' => 'Öncelik',
-                    ],
-
-                    'cms' => [
-                        'info'  => 'CMS sayfaları için frekans ve öncelik seçeneklerini ayarlayın.',
-
-                        'frequency' => [
-                            'title' => 'Frekans',
-
-                            'options' => [
-                                'always'  => 'Her zaman',
-                                'daily'   => 'Günlük',
-                                'hourly'  => 'Saatlik',
-                                'monthly' => 'Aylık',
-                                'never'   => 'Asla',
-                                'weekly'  => 'Haftalık',
-                                'yearly'  => 'Yıllık',
-                            ],
-                        ],
-
-                        'title'    => 'CMS Sayfaları',
-                        'priority' => 'Öncelik',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => 'Müşteri İncelemesine İzin Ver',
-                        'allow-guest-review'      => 'Konuk İncelemesine İzin Ver',
-                        'censoring-reviewer-name' => 'İnceleyen Adını Sansürleme',
-                        'display-review-count'    => 'Derecelendirmeler için inceleme sayısını görüntüleyin.',
-                        'display-star-count'      => 'Derecelendirmelerdeki yıldız sayısını görüntüleyin.',
-                        'summary'                 => 'Özet',
-                        'title'                   => 'İnceleme',
-                        'title-info'              => 'Bir şeyin değerlendirilmesi veya değerlendirilmesi, genellikle görüşler ve geri bildirimler içeren bir değerlendirme sürecidir.',
+                        'allow-customer-review' => 'Müşteri İncelemesine İzin Ver',
+                        'allow-guest-review'    => 'Konuk İncelemesine İzin Ver',
+                        'display-review-count'  => 'Derecelendirmeler için inceleme sayısını görüntüleyin.',
+                        'display-star-count'    => 'Derecelendirmelerdeki yıldız sayısını görüntüleyin.',
+                        'summary'               => 'Özet',
+                        'title'                 => 'İnceleme',
+                        'title-info'            => 'Bir şeyin değerlendirilmesi veya değerlendirilmesi, genellikle görüşler ve geri bildirimler içeren bir değerlendirme sürecidir.',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => 'Alt bilgi metni',
-                        'footer-text-info' => 'PDF\'nin altbilgisinde görünecek metni girin.',
                         'info'             => 'Fatura Kimliği, Sipariş Kimliği\'ni başlıkta görüntülemek ve fatura logosunu içermek için PDF Yazdırmalarını yapılandırın.',
                         'invoice-id-info'  => 'Fatura Başlığında Fatura Kimliği\'nin görüntülenmesini yapılandırın.',
                         'invoice-id-title' => 'Başlıkta Fatura Kimliği\'ni Göster',

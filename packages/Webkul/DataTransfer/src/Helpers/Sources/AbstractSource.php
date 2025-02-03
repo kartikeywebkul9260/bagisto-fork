@@ -7,68 +7,37 @@ use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
 abstract class AbstractSource
 {
     /**
-     * Reader.
-     */
-    protected mixed $reader;
-
-    /**
-     * Column names.
+     * Column names
      */
     protected array $columnNames = [];
 
     /**
-     * Quantity of columns.
+     * Quantity of columns
      */
     protected int $totalColumns = 0;
 
     /**
-     * Current row.
+     * Current row
      */
     protected array $currentRowData = [];
 
     /**
-     * Current row number.
+     * Current row number
      */
     protected int $currentRowNumber = -1;
 
     /**
-     * Flag to indicate that wrong quote was found.
+     * Flag to indicate that wrong quote was found
      */
     protected bool $foundWrongQuoteFlag = false;
 
     /**
-     * Initialize reader.
-     */
-    abstract protected function initialize(): void;
-
-    /**
-     * Read next line from source.
+     * Read next line from source
      */
     abstract protected function getNextRow(): array|bool;
 
     /**
-     * Generate error report.
-     */
-    abstract public function generateErrorReport(array $errors): string;
-
-    /**
-     * Create a new helper instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        protected string $filePath,
-        protected string $delimiter = ','
-    ) {
-        try {
-            $this->initialize();
-        } catch (\Exception $e) {
-            throw new \LogicException("Unable to open file: '{$filePath}'");
-        }
-    }
-
-    /**
-     * Return the key of the current row.
+     * Return the key of the current row
      */
     public function getCurrentRowNumber(): int
     {
@@ -76,7 +45,7 @@ abstract class AbstractSource
     }
 
     /**
-     * Checks if current position is valid.
+     * Checks if current position is valid
      */
     public function valid(): bool
     {
@@ -84,7 +53,7 @@ abstract class AbstractSource
     }
 
     /**
-     * Read next line from source.
+     * Read next line from source
      */
     public function current(): array
     {
@@ -102,7 +71,7 @@ abstract class AbstractSource
     }
 
     /**
-     * Read next line from source.
+     * Read next line from source
      */
     public function next(): void
     {
@@ -120,7 +89,7 @@ abstract class AbstractSource
     }
 
     /**
-     * Rewind the iterator to the first row.
+     * Rewind the iterator to the first row
      */
     public function rewind(): void
     {
@@ -134,31 +103,7 @@ abstract class AbstractSource
     }
 
     /**
-     * Set reader.
-     */
-    public function setReader(mixed $reader): void
-    {
-        $this->reader = $reader;
-    }
-
-    /**
-     * Get reader.
-     */
-    public function getReader(): mixed
-    {
-        return $this->reader;
-    }
-
-    /**
-     * Set column names.
-     */
-    public function setColumnNames(array $columnNames): void
-    {
-        $this->columnNames = $columnNames;
-    }
-
-    /**
-     * Get column names.
+     * Column names getter.
      */
     public function getColumnNames(): array
     {
@@ -166,28 +111,10 @@ abstract class AbstractSource
     }
 
     /**
-     * Set total columns count.
-     */
-    public function setTotalColumns(int $totalColumns): void
-    {
-        $this->totalColumns = $totalColumns;
-    }
-
-    /**
-     * Total columns count.
+     * Column names getter.
      */
     public function getTotalColumns(): int
     {
-        return $this->totalColumns;
-    }
-
-    /**
-     * Error file path.
-     */
-    public function errorFilePath(): string
-    {
-        $fileType = pathinfo($this->filePath, PATHINFO_EXTENSION);
-
-        return 'imports/'.time().'-error-report.'.$fileType;
+        return $this->columnNames;
     }
 }

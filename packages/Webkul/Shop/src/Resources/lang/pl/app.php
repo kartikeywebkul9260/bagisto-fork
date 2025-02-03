@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'Brak',
-                        'total-amount' => 'Całkowita kwota',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'Wybierz opcję',
                     'select-above-options' => 'Wybierz powyższe opcje',
@@ -880,10 +873,7 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'Karuzela kategorii',
-            'image-carousel'      => 'Karuzela obrazów',
-            'offer'               => 'Otrzymaj DO 40% RABATU na swoje pierwsze zamówienie, ZAKUP TERAZ',
-            'product-carousel'    => 'Karuzela produktów',
+            'offer'               => 'Otrzymaj DO 40% RABATU na swoje pierwsze zamówienie. ZAKUP TERAZ',
             'resend-verify-email' => 'Wyślij ponownie e-mail weryfikacyjny',
             'verify-email'        => 'Zweryfikuj swoje konto e-mail',
         ],
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'Następna strona',
             'pagination-showing' => 'Wyświetlanie :firstItem do :lastItem z :total wpisów',
-            'prev-page'          => 'Poprzednia strona',
         ],
     ],
 

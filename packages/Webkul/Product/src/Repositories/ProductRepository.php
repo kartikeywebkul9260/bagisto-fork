@@ -264,14 +264,6 @@ class ProductRepository extends Repository
 
             if (! empty($params['type'])) {
                 $qb->where('products.type', $params['type']);
-
-                if (
-                    $params['type'] === 'simple'
-                    && ! empty($params['exclude_customizable_products'])
-                ) {
-                    $qb->leftJoin('product_customizable_options', 'products.id', '=', 'product_customizable_options.product_id')
-                        ->whereNull('product_customizable_options.id');
-                }
             }
 
             /**
@@ -456,19 +448,11 @@ class ProductRepository extends Repository
             'variants.attribute_values',
             'variants.price_indices',
             'variants.inventory_indices',
-        ])->scopeQuery(function ($query) use ($params, $indices) {
+        ])->scopeQuery(function ($query) use ($indices) {
             $qb = $query->distinct()
                 ->whereIn('products.id', $indices['ids']);
 
-            if (
-                ! empty($params['type'])
-                && $params['type'] === 'simple'
-                && ! empty($params['exclude_customizable_products'])
-            ) {
-                $qb->leftJoin('product_customizable_options', 'products.id', '=', 'product_customizable_options.product_id')
-                    ->whereNull('product_customizable_options.id');
-            }
-
+            // Sort collection
             $qb->orderBy(DB::raw('FIELD(id, '.implode(',', $indices['ids']).')'));
 
             return $qb;

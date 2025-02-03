@@ -568,13 +568,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'لا شيء',
-                        'total-amount' => 'المبلغ الإجمالي',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'يرجى اختيار خيار',
                     'select-above-options' => 'يرجى اختيار الخيارات أعلاه',
@@ -880,11 +873,8 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'سلاسل الفئات',
-            'image-carousel'      => 'سلاسل الصور',
-            'offer'               => 'احصل على خصم يصل إلى 40% على طلبك الأول، تسوق الآن',
-            'product-carousel'    => 'سلاسل المنتجات',
-            'resend-verify-email' => 'إعادة إرسال بريد التحقق',
+            'offer'               => 'احصل على خصم يصل إلى 40٪ على طلبك الأول اشتر الآن',
+            'resend-verify-email' => 'إعادة إرسال رسالة التحقق من البريد الإلكتروني',
             'verify-email'        => 'تحقق من حساب بريدك الإلكتروني',
         ],
 
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'الصفحة التالية',
             'pagination-showing' => 'عرض :firstItem إلى :lastItem من :total مقالات',
-            'prev-page'          => 'الصفحة السابقة',
         ],
     ],
 

@@ -219,14 +219,9 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
-                            <!-- Save Button -->
-                            <x-admin::button
-                                button-type="button"
-                                class="primary-button"
-                                :title="trans('admin::app.marketing.communications.events.index.create.save-btn')"
-                                ::loading="isLoading"
-                                ::disabled="isLoading"
-                            />
+                            <button class="primary-button">
+                                @lang('admin::app.marketing.communications.events.index.create.save-btn')
+                            </button>
                         </x-slot>
                     </x-admin::modal>
 
@@ -246,8 +241,6 @@
                 data() {
                     return {
                         selectedEvents: {},
-
-                        isLoading: false,
                     }
                 },
 
@@ -269,8 +262,6 @@
 
                 methods: {
                     updateOrCreate(params, { resetForm, setErrors }) {
-                        this.isLoading = true;
-
                         let formData = new FormData(this.$refs.eventCreateForm);
 
                         if (params.id) {
@@ -279,8 +270,6 @@
 
                         this.$axios.post(params.id ? "{{ route('admin.marketing.communications.events.update')}}" : "{{ route('admin.marketing.communications.events.store') }}", formData)
                             .then((response) => {
-                                this.isLoading = false;
-
                                 this.$refs.emailEvents.toggle();
 
                                 this.$refs.datagrid.get();
@@ -288,8 +277,6 @@
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch(error => {
-                                this.isLoading = false;
-
                                 if (error.response.status == 422) {
                                     setErrors(error.response.data.errors);
                                 }

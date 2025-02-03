@@ -176,14 +176,17 @@
 
                     <!-- Modal Footer -->
                     <x-slot:footer>
-                        <!-- Save Button -->
-                        <x-admin::button
-                            button-type="submit"
-                            class="primary-button justify-center"
-                            :title="trans('admin::app.customers.customers.index.create.save-btn')"
-                            ::loading="isLoading"
-                            ::disabled="isLoading"
-                        />
+                        <!-- Modal Submission -->
+                        <div class="flex items-center gap-x-2.5">
+                            <!-- Save Button -->
+                            <x-admin::button
+                                button-type="submit"
+                                class="primary-button justify-center"
+                                :title="trans('admin::app.customers.customers.index.create.save-btn')"
+                                ::loading="isStoring"
+                                ::disabled="isStoring"
+                            />
+                        </div>
                     </x-slot>
                 </x-admin::modal>
             </form>
@@ -198,7 +201,7 @@
                 return {
                     groups: @json($groups),
 
-                    isLoading: false,
+                    isStoring: false,
                 };
             },
 
@@ -208,7 +211,7 @@
                 },
 
                 create(params, { resetForm, setErrors }) {
-                    this.isLoading = true;
+                    this.isStoring = true;
 
                     this.$axios.post("{{ route('admin.customers.customers.store') }}", params)
                         .then((response) => {
@@ -220,10 +223,12 @@
 
                             resetForm();
 
-                            this.isLoading = false;
+                            this.isStoring = false;
                         })
-                        .catch(error => {                            
-                            this.isLoading = false;
+                        .catch(error => {
+                            console.log(error);
+                            
+                            this.isStoring = false;
 
                             if (error.response.status == 422) {
                                 setErrors(error.response.data.errors);

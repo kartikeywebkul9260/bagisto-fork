@@ -190,11 +190,6 @@ return [
                 'title'                   => 'Créer une commande pour :name',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => 'Aucun',
-                        'total-amount' => 'Montant total',
-                    ],
-
                     'configurable' => [
                         'select-options' => 'Veuillez sélectionner une option',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => 'Liens',
-                    ],
-
-                    'virtual' => [
-                        'none'         => 'Aucun',
-                        'total-amount' => 'Montant total',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => 'Ajouter une option',
-                            'empty-info'        => 'Pour créer des options personnalisables rapidement.',
-                            'empty-title'       => 'Ajouter une option',
-                            'info'              => 'Cela personnalisera le produit simple.',
-                            'title'             => 'Article personnalisable',
-
-                            'update-create' => [
-                                'is-required'               => 'Est requis',
-                                'max-characters'            => 'Nombre maximum de caractères',
-                                'name'                      => 'Titre',
-                                'no'                        => 'Non',
-                                'price'                     => 'Prix',
-                                'save-btn'                  => 'Enregistrer',
-                                'supported-file-extensions' => 'Extensions de fichier prises en charge',
-                                'title'                     => 'Option',
-                                'type'                      => 'Type',
-                                'yes'                       => 'Oui',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => 'Ajouter une option',
-                                'delete'      => 'Supprimer',
-                                'delete-btn'  => 'Supprimer',
-                                'edit-btn'    => 'Modifier',
-                                'empty-info'  => 'Pour créer diverses combinaisons de produits rapidement.',
-                                'empty-title' => 'Ajouter une option',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => 'Texte',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => 'Zone de texte',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => 'Case à cocher',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => 'Bouton radio',
-                                    ],
-
-                                    'select' => [
-                                        'title' => 'Sélectionner',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => 'Sélection multiple',
-                                    ],
-
-                                    'date' => [
-                                        'title' => 'Date',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => 'Date et heure',
-                                    ],
-
-                                    'time' => [
-                                        'title' => 'Heure',
-                                    ],
-
-                                    'file' => [
-                                        'title' => 'Fichier',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => 'Étiquette',
-                                        'price'    => 'Prix',
-                                        'save-btn' => 'Enregistrer',
-                                        'title'    => 'Option',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => 'Le produit est déjà associé à un produit configurable, groupé ou en pack.',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => 'Ajouter une variante',
                         'delete-btn'        => 'Supprimer',
@@ -2627,6 +2530,7 @@ return [
                     'general'           => 'Général',
                     'group-separator'   => 'Séparateur de Groupe',
                     'name'              => 'Nom',
+                    'separator-note'    => 'Le champ :attribute ne peut accepter que les opérateurs virgule (,) et point (.)',
                     'save-btn'          => 'Enregistrer la devise',
                     'symbol'            => 'Symbole',
                     'title'             => 'Créer une nouvelle devise',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => 'Thèmes',
 
                 'datagrid' => [
-                    'active'       => 'Actif',
-                    'channel_name' => 'Nom du canal',
-                    'delete'       => 'Supprimer',
-                    'id'           => 'ID',
-                    'inactive'     => 'Inactif',
-                    'name'         => 'Nom',
-                    'sort-order'   => 'Ordre de tri',
-                    'status'       => 'Statut',
-                    'theme'        => 'Thème',
-                    'type'         => 'Type',
-                    'view'         => 'Voir',
+                    'active'        => 'Actif',
+                    'channel_name'  => 'Nom du canal',
+                    'change-status' => 'Changer le statut',
+                    'delete'        => 'Supprimer',
+                    'id'            => 'ID',
+                    'inactive'      => 'Inactif',
+                    'name'          => 'Nom',
+                    'sort-order'    => 'Ordre de tri',
+                    'status'        => 'Statut',
+                    'theme'         => 'Thème',
+                    'type'          => 'Type',
+                    'view'          => 'Voir',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'Vicuna',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => 'Configurer les options du plan du site.',
-                    'title' => 'Plan du Site',
-
-                    'settings' => [
-                        'enabled' => 'Activé',
-                        'info'    => 'Activer ou désactiver le plan du site pour votre site web afin d\'améliorer le référencement et d\'améliorer l\'expérience utilisateur.',
-                        'title'   => 'Paramètres',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => 'Configurer les options de limites de fichier.',
-                        'max-file-size'    => 'Taille maximale du fichier',
-                        'max-url-per-file' => 'Nombre maximal d\'URL par fichier',
-                        'title'            => 'Limites de Fichier',
-                    ],
-
-                    'store-url' => [
-                        'info'  => 'Configurer les options de fréquence et de priorité pour l\'URL du magasin.',
-
-                        'frequency' => [
-                            'title' => 'Fréquence',
-
-                            'options' => [
-                                'always'  => 'Toujours',
-                                'daily'   => 'Quotidiennement',
-                                'hourly'  => 'Toutes les heures',
-                                'monthly' => 'Mensuellement',
-                                'never'   => 'Jamais',
-                                'weekly'  => 'Hebdomadairement',
-                                'yearly'  => 'Annuellement',
-                            ],
-                        ],
-
-                        'title'    => 'URL du Magasin',
-                        'priority' => 'Priorité',
-                    ],
-
-                    'categories' => [
-                        'info'  => 'Configurer les options de fréquence et de priorité pour les catégories.',
-
-                        'frequency' => [
-                            'title' => 'Fréquence',
-
-                            'options' => [
-                                'always'  => 'Toujours',
-                                'daily'   => 'Quotidiennement',
-                                'hourly'  => 'Toutes les heures',
-                                'monthly' => 'Mensuellement',
-                                'never'   => 'Jamais',
-                                'weekly'  => 'Hebdomadairement',
-                                'yearly'  => 'Annuellement',
-                            ],
-                        ],
-
-                        'title'    => 'Catégories',
-                        'priority' => 'Priorité',
-                    ],
-
-                    'products' => [
-                        'info'  => 'Configurer les options de fréquence et de priorité pour les produits.',
-
-                        'frequency' => [
-                            'title' => 'Fréquence',
-
-                            'options' => [
-                                'always'  => 'Toujours',
-                                'daily'   => 'Quotidiennement',
-                                'hourly'  => 'Toutes les heures',
-                                'monthly' => 'Mensuellement',
-                                'never'   => 'Jamais',
-                                'weekly'  => 'Hebdomadairement',
-                                'yearly'  => 'Annuellement',
-                            ],
-                        ],
-
-                        'title'    => 'Produits',
-                        'priority' => 'Priorité',
-                    ],
-
-                    'cms' => [
-                        'info'  => 'Configurer les options de fréquence et de priorité pour les pages CMS.',
-
-                        'frequency' => [
-                            'title' => 'Fréquence',
-
-                            'options' => [
-                                'always'  => 'Toujours',
-                                'daily'   => 'Quotidiennement',
-                                'hourly'  => 'Toutes les heures',
-                                'monthly' => 'Mensuellement',
-                                'never'   => 'Jamais',
-                                'weekly'  => 'Hebdomadairement',
-                                'yearly'  => 'Annuellement',
-                            ],
-                        ],
-
-                        'title'    => 'Pages CMS',
-                        'priority' => 'Priorité',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => 'Autoriser les avis des clients',
-                        'allow-guest-review'      => 'Autoriser les avis des invités',
-                        'censoring-reviewer-name' => 'Censurer le nom du critique',
-                        'display-review-count'    => 'Affichez le nombre d\'avis pour les notes.',
-                        'display-star-count'      => 'Affichez le nombre d\'étoiles dans les notes.',
-                        'summary'                 => 'Résumé',
-                        'title'                   => 'Avis',
-                        'title-info'              => 'Évaluation ou évaluation de quelque chose, impliquant souvent des opinions et des commentaires.',
+                        'allow-customer-review' => 'Autoriser les avis des clients',
+                        'allow-guest-review'    => 'Autoriser les avis des invités',
+                        'display-review-count'  => 'Affichez le nombre d\'avis pour les notes.',
+                        'display-star-count'    => 'Affichez le nombre d\'étoiles dans les notes.',
+                        'summary'               => 'Résumé',
+                        'title'                 => 'Avis',
+                        'title-info'            => 'Évaluation ou évaluation de quelque chose, impliquant souvent des opinions et des commentaires.',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => 'Texte de pied de page',
-                        'footer-text-info' => 'Saisissez le texte qui apparaîtra dans le pied de page du PDF.',
                         'info'             => 'Configurer les impressions PDF pour afficher l\'ID de la facture, l\'ID de la commande dans l\'en-tête et inclure le logo de la facture.',
                         'invoice-id-info'  => 'Configurer l\'affichage de l\'ID de la facture dans l\'en-tête de la facture.',
                         'invoice-id-title' => 'Afficher l\'ID de la facture dans l\'en-tête',

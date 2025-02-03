@@ -244,13 +244,12 @@
 
                     <!-- Modal Footer -->
                     <x-slot:footer>
-                        <!-- Save Button -->
                         <x-admin::button
                             button-type="submit"
                             class="primary-button justify-center"
                             :title="trans('admin::app.customers.customers.view.edit.save-btn')"
-                            ::loading="isLoading"
-                            ::disabled="isLoading"
+                            ::loading="isUpdating"
+                            ::disabled="isUpdating"
                         />
                     </x-slot>
                 </x-admin::modal>
@@ -272,13 +271,13 @@
                 return {
                     groups: @json($groups),
 
-                    isLoading: false,
+                    isUpdating: false,
                 };
             },
 
             methods: {
                 edit(params, {resetForm, setErrors}) {
-                    this.isLoading = true;
+                    this.isUpdating = true;
 
                     let formData = new FormData(this.$refs.customerEditForm);
 
@@ -292,12 +291,12 @@
 
                             resetForm();
 
-                            this.isLoading = false;
+                            this.isUpdating = false;
 
                             this.$refs.customerEditModal.close();
                         })
                         .catch(error => {
-                            this.isLoading = false;
+                            this.isUpdating = false;
 
                             if (error.response.status == 422) {
                                 setErrors(error.response.data.errors);

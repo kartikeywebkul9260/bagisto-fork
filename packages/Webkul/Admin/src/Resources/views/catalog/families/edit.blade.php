@@ -405,12 +405,14 @@
 
                             <!-- Modal Footer -->
                             <x-slot:footer>
-                                <!-- Save Button -->
-                                <x-admin::button
-                                    button-type="button"
-                                    class="primary-button"
-                                    :title="trans('admin::app.catalog.families.edit.add-group-btn')"
-                                />
+                                <div class="flex items-center gap-x-2.5">
+                                    <button 
+                                        type="submit"
+                                        class="primary-button"
+                                    >
+                                        @lang('admin::app.catalog.families.edit.add-group-btn')
+                                    </button>
+                                </div>
                             </x-slot>
                         </x-admin::modal>
                     </form>

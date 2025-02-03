@@ -133,7 +133,7 @@
                     <!-- Captcha -->
                     @if (core()->getConfigData('customer.captcha.credentials.status'))
                         <div class="mt-5 flex">
-                            {!! \Webkul\Customer\Facades\Captcha::render() !!}
+                            {!! Captcha::render() !!}
                         </div>
                     @endif
 
@@ -171,7 +171,7 @@
     </div>
 
     @push('scripts')
-        {!! \Webkul\Customer\Facades\Captcha::renderJS() !!}
+        {!! Captcha::renderJS() !!}
 
         <script>
             function switchVisibility() {

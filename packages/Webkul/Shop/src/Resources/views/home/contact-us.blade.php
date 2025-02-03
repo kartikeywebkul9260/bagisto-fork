@@ -105,7 +105,7 @@
                     <!-- Re captcha -->
                     @if (core()->getConfigData('customer.captcha.credentials.status'))
                         <div class="mb-5 flex">
-                            {!! \Webkul\Customer\Facades\Captcha::render() !!}
+                            {!! Captcha::render() !!}
                         </div>
                     @endif
 
@@ -124,6 +124,6 @@
     </div>
 
     @push('scripts')
-        {!! \Webkul\Customer\Facades\Captcha::renderJS() !!}
+        {!! Captcha::renderJS() !!}
     @endpush
 </x-shop::layouts>

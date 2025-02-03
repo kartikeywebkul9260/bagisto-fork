@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'אין',
-                        'total-amount' => 'סכום כולל',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'אנא בחר אפשרות',
                     'select-above-options' => 'אנא בחר אפשרויות למעלה',
@@ -880,11 +873,8 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'קרוסלת קטגוריות',
-            'image-carousel'      => 'קרוסלת תמונות',
-            'offer'               => 'קבל עד 40% הנחה על ההזמנה הראשונה שלך, קנה עכשיו',
-            'product-carousel'    => 'קרוסלת מוצרים',
-            'resend-verify-email' => 'שלח מחדש את מייל האימות',
+            'offer'               => 'עד 40% הנחה על הזמנתך הראשונה! קנה עכשיו',
+            'resend-verify-email' => 'שלח מחדש אימייל לאימות',
             'verify-email'        => 'אמת את חשבון האימייל שלך',
         ],
 
@@ -893,9 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'עמוד הבא',
             'pagination-showing' => 'מציג :firstItem עד :lastItem מתוך :total רשומות',
-            'prev-page'          => 'עמוד קודם',
         ],
     ],
 

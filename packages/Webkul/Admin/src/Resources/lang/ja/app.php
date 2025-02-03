@@ -190,11 +190,6 @@ return [
                 'title'                   => ':name の注文を作成',
 
                 'types' => [
-                    'simple' => [
-                        'none'         => 'なし',
-                        'total-amount' => '合計金額',
-                    ],
-
                     'configurable' => [
                         'select-options' => 'オプションを選択してください',
                     ],
@@ -210,11 +205,6 @@ return [
 
                     'downloadable' => [
                         'title' => 'リンク',
-                    ],
-
-                    'virtual' => [
-                        'none'         => 'なし',
-                        'total-amount' => '合計金額',
                     ],
                 ],
 
@@ -868,93 +858,6 @@ return [
                 ],
 
                 'types' => [
-                    'simple' => [
-                        'customizable-options' => [
-                            'add-btn'           => 'オプションを追加',
-                            'empty-info'        => 'カスタマイズ可能なオプションをすぐに作成できます。',
-                            'empty-title'       => 'オプションを追加',
-                            'info'              => 'これにより、シンプルな製品がカスタマイズされます。',
-                            'title'             => 'カスタマイズ可能なアイテム',
-
-                            'update-create' => [
-                                'is-required'               => '必須',
-                                'max-characters'            => '最大文字数',
-                                'name'                      => 'タイトル',
-                                'no'                        => 'いいえ',
-                                'price'                     => '価格',
-                                'save-btn'                  => '保存',
-                                'supported-file-extensions' => 'サポートされているファイル拡張子',
-                                'title'                     => 'オプション',
-                                'type'                      => 'タイプ',
-                                'yes'                       => 'はい',
-                            ],
-
-                            'option' => [
-                                'add-btn'     => 'オプションを追加',
-                                'delete'      => '削除',
-                                'delete-btn'  => '削除',
-                                'edit-btn'    => '編集',
-                                'empty-info'  => 'さまざまな製品の組み合わせをすぐに作成できます。',
-                                'empty-title' => 'オプションを追加',
-
-                                'types' => [
-                                    'text' => [
-                                        'title' => 'テキスト',
-                                    ],
-
-                                    'textarea' => [
-                                        'title' => 'テキストエリア',
-                                    ],
-
-                                    'checkbox' => [
-                                        'title' => 'チェックボックス',
-                                    ],
-
-                                    'radio' => [
-                                        'title' => 'ラジオボタン',
-                                    ],
-
-                                    'select' => [
-                                        'title' => '選択',
-                                    ],
-
-                                    'multiselect' => [
-                                        'title' => 'マルチセレクト',
-                                    ],
-
-                                    'date' => [
-                                        'title' => '日付',
-                                    ],
-
-                                    'datetime' => [
-                                        'title' => '日付と時刻',
-                                    ],
-
-                                    'time' => [
-                                        'title' => '時間',
-                                    ],
-
-                                    'file' => [
-                                        'title' => 'ファイル',
-                                    ],
-                                ],
-
-                                'items' => [
-                                    'update-create' => [
-                                        'label'    => 'ラベル',
-                                        'price'    => '価格',
-                                        'save-btn' => '保存',
-                                        'title'    => 'オプション',
-                                    ],
-                                ],
-                            ],
-
-                            'validations' => [
-                                'associated-product' => 'この製品は既にコンフィギュラブル、グループ、またはバンドル製品に関連付けられています。',
-                            ],
-                        ],
-                    ],
-
                     'configurable' => [
                         'add-btn'           => 'バリエーションを追加',
                         'delete-btn'        => '削除',
@@ -2627,6 +2530,7 @@ return [
                     'general'           => '一般',
                     'group-separator'   => 'グループ区切り',
                     'name'              => '名前',
+                    'separator-note'    => ':attribute フィールドはカンマ (,) とドット (.) のみを受け付けます',
                     'save-btn'          => '通貨を保存',
                     'symbol'            => '記号',
                     'title'             => '新しい通貨を作成',
@@ -3182,17 +3086,18 @@ return [
                 'title'      => 'テーマ',
 
                 'datagrid' => [
-                    'active'       => 'アクティブ',
-                    'channel_name' => 'チャンネル名',
-                    'delete'       => '削除',
-                    'id'           => 'ID',
-                    'inactive'     => '非アクティブ',
-                    'name'         => '名前',
-                    'sort-order'   => '並び替え順',
-                    'status'       => 'ステータス',
-                    'theme'        => 'テーマ',
-                    'type'         => 'タイプ',
-                    'view'         => '表示',
+                    'active'        => 'アクティブ',
+                    'channel_name'  => 'チャンネル名',
+                    'change-status' => 'ステータスを変更',
+                    'delete'        => '削除',
+                    'id'            => 'ID',
+                    'inactive'      => '非アクティブ',
+                    'name'          => '名前',
+                    'sort-order'    => '並び替え順',
+                    'status'        => 'ステータス',
+                    'theme'         => 'テーマ',
+                    'type'          => 'タイプ',
+                    'view'          => '表示',
                 ],
             ],
 
@@ -3566,108 +3471,6 @@ return [
                         'vicuna'            => 'ビクーニャ',
                     ],
                 ],
-
-                'sitemap' => [
-                    'info'  => 'サイトマップのオプションを設定します。',
-                    'title' => 'サイトマップ',
-
-                    'settings' => [
-                        'enabled' => '有効',
-                        'info'    => 'サイトマップを有効または無効にして、検索エンジン最適化を改善し、ユーザーエクスペリエンスを向上させます。',
-                        'title'   => '設定',
-                    ],
-
-                    'file-limits' => [
-                        'info'             => 'ファイル制限オプションを設定します。',
-                        'max-file-size'    => '最大ファイルサイズ',
-                        'max-url-per-file' => 'ファイルあたりの最大URL数',
-                        'title'            => 'ファイル制限',
-                    ],
-
-                    'store-url' => [
-                        'info'  => 'ストアURLの頻度と優先順位のオプションを設定します。',
-
-                        'frequency' => [
-                            'title' => '頻度',
-
-                            'options' => [
-                                'always'  => '常に',
-                                'daily'   => '毎日',
-                                'hourly'  => '毎時',
-                                'monthly' => '毎月',
-                                'never'   => '決してない',
-                                'weekly'  => '毎週',
-                                'yearly'  => '毎年',
-                            ],
-                        ],
-
-                        'title'    => 'ストアURL',
-                        'priority' => '優先順位',
-                    ],
-
-                    'categories' => [
-                        'info'  => 'カテゴリーの頻度と優先順位のオプションを設定します。',
-
-                        'frequency' => [
-                            'title' => '頻度',
-
-                            'options' => [
-                                'always'  => '常に',
-                                'daily'   => '毎日',
-                                'hourly'  => '毎時',
-                                'monthly' => '毎月',
-                                'never'   => '決してない',
-                                'weekly'  => '毎週',
-                                'yearly'  => '毎年',
-                            ],
-                        ],
-
-                        'title'    => 'カテゴリー',
-                        'priority' => '優先順位',
-                    ],
-
-                    'products' => [
-                        'info'  => '製品の頻度と優先順位のオプションを設定します。',
-
-                        'frequency' => [
-                            'title' => '頻度',
-
-                            'options' => [
-                                'always'  => '常に',
-                                'daily'   => '毎日',
-                                'hourly'  => '毎時',
-                                'monthly' => '毎月',
-                                'never'   => '決してない',
-                                'weekly'  => '毎週',
-                                'yearly'  => '毎年',
-                            ],
-                        ],
-
-                        'title'    => '製品',
-                        'priority' => '優先順位',
-                    ],
-
-                    'cms' => [
-                        'info'  => 'CMSページの頻度と優先順位のオプションを設定します。',
-
-                        'frequency' => [
-                            'title' => '頻度',
-
-                            'options' => [
-                                'always'  => '常に',
-                                'daily'   => '毎日',
-                                'hourly'  => '毎時',
-                                'monthly' => '毎月',
-                                'never'   => '決してない',
-                                'weekly'  => '毎週',
-                                'yearly'  => '毎年',
-                            ],
-                        ],
-
-                        'title'    => 'CMSページ',
-                        'priority' => '優先順位',
-                    ],
-                ],
             ],
 
             'catalog' => [
@@ -3765,14 +3568,13 @@ return [
                     ],
 
                     'review' => [
-                        'allow-customer-review'   => '顧客レビューを許可する',
-                        'allow-guest-review'      => 'ゲストレビューを許可する',
-                        'censoring-reviewer-name' => 'レビュアー名の検閲',
-                        'display-review-count'    => '評価のレビュー数を表示します。',
-                        'display-star-count'      => '評価に星の数を表示します。',
-                        'summary'                 => 'まとめ',
-                        'title'                   => 'レビュー',
-                        'title-info'              => '何かを評価または評価することで、しばしば意見やフィードバックが含まれます。',
+                        'allow-customer-review' => '顧客レビューを許可する',
+                        'allow-guest-review'    => 'ゲストレビューを許可する',
+                        'display-review-count'  => '評価のレビュー数を表示します。',
+                        'display-star-count'    => '評価に星の数を表示します。',
+                        'summary'               => 'まとめ',
+                        'title'                 => 'レビュー',
+                        'title-info'            => '何かを評価または評価することで、しばしば意見やフィードバックが含まれます。',
                     ],
 
                     'attribute' => [
@@ -4134,8 +3936,6 @@ return [
                     ],
 
                     'pdf-print-outs' => [
-                        'footer-text'      => 'フッターテキスト',
-                        'footer-text-info' => 'PDFのフッターに表示されるテキストを入力してください。',
                         'info'             => 'PDF印刷アウトを設定して、ヘッダーに請求書ID、注文IDを表示し、請求書のロゴを含めます。',
                         'invoice-id-info'  => '請求書ヘッダーに請求書IDを表示するように設定します。',
                         'invoice-id-title' => 'ヘッダーに請求書IDを表示',

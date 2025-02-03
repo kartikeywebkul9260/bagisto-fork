@@ -2,10 +2,10 @@
 
 namespace Webkul\Core\Console\Commands;
 
-use Illuminate\Foundation\Console\DownCommand as BaseDownCommand;
+use Illuminate\Foundation\Console\DownCommand as OriginalCommand;
 use Webkul\Core\Models\Channel;
 
-class DownCommand extends BaseDownCommand
+class DownCommand extends OriginalCommand
 {
     /**
      * Execute the console command.
@@ -26,7 +26,7 @@ class DownCommand extends BaseDownCommand
      */
     protected function downAllChannels()
     {
-        $this->components->info('All channels are down.');
+        $this->comment('All channels are down.');
 
         return Channel::query()->update(['is_maintenance_on' => 1]);
     }

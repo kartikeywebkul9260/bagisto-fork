@@ -204,9 +204,7 @@
 
                                                 <!-- Locales tables heading -->
                                                 <x-admin::table.th v-for="locale in locales">
-                                                    <x-admin::table.th>
-                                                        @{{ locale.name + '(' + [locale.code] + ')' }}
-                                                    </x-admin::table.th>
+                                                    @{{ locale.name + '(' + [locale.code] + ')' }}
                                                 </x-admin::table.th>
 
                                                 <!-- Action tables heading -->
@@ -228,17 +226,19 @@
                                                     class="hover:bg-gray-50 dark:hover:bg-gray-950"
                                                     v-show="! element.isDelete"
                                                 >
-                                                    <input
-                                                        type="hidden"
-                                                        :name="'options[' + element.id + '][isNew]'"
-                                                        :value="element.isNew"
-                                                    >
-
-                                                    <input
-                                                        type="hidden"
-                                                        :name="'options[' + element.id + '][isDelete]'"
-                                                        :value="element.isDelete"
-                                                    >
+                                                    <th>
+                                                        <input
+                                                            type="hidden"
+                                                            :name="'options[' + element.id + '][isNew]'"
+                                                            :value="element.isNew"
+                                                        >
+        
+                                                        <input
+                                                            type="hidden"
+                                                            :name="'options[' + element.id + '][isDelete]'"
+                                                            :value="element.isDelete"
+                                                        >
+                                                    </th>
 
                                                     <!-- Draggable Icon -->
                                                     <x-admin::table.td class="!px-0 text-center">
@@ -824,14 +824,14 @@
                         @toggle="listenModel"
                         ref="addOptionsRow"
                     >
-                        <!-- Modal Header -->
+                        <!-- Modal Header !-->
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @lang('admin::app.catalog.attributes.edit.add-option')
                             </p>
                         </x-slot>
 
-                        <!-- Modal Content -->
+                        <!-- Modal Content !-->
                         <x-slot:content>
                             <div class="grid">
                                 <!-- Image Input -->
@@ -931,14 +931,15 @@
                             </div>
                         </x-slot>
 
-                        <!-- Modal Footer -->
+                        <!-- Modal Footer !-->
                         <x-slot:footer>
                             <!-- Save Button -->
-                            <x-admin::button
-                                button-type="button"
+                            <button
+                                type="submit"
                                 class="primary-button"
-                                :title="trans('admin::app.catalog.attributes.edit.option.save-btn')"
-                            />
+                            >
+                                @lang('admin::app.catalog.attributes.edit.option.save-btn')
+                            </button>
                         </x-slot>
                     </x-admin::modal>
                 </form>
@@ -989,7 +990,7 @@
 
                 methods: {
                     storeOptions(params, { resetForm, setValues }) {
-                        const lastId = this.optionsData.map(item => item.id).pop() ?? 0 ;
+                        const lastId = this.optionsData.map(item => item.id).pop() ?? 0;
 
                         if (! params.id) {
                             params.id = `options_${lastId + 1}`;
@@ -1011,15 +1012,15 @@
 
                         const sliderImage = formData.get("swatch_value[]");
 
-                        if (sliderImage) {
+                        if (sliderImage?.name) {
                             params.swatch_value = sliderImage;
+
+                            if (sliderImage instanceof File) {
+                                this.setFile(sliderImage, params.id);
+                            }
                         }
 
                         this.$refs.addOptionsRow.toggle();
-
-                        if (params.swatch_value instanceof File) {
-                            this.setFile(sliderImage, params.id);
-                        }
 
                         resetForm();
                     },

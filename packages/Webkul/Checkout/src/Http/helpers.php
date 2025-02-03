@@ -1,7 +1,5 @@
 <?php
 
-use Webkul\Checkout\Facades\Cart;
-
 if (! function_exists('cart')) {
     /**
      * Cart helper.
@@ -10,6 +8,6 @@ if (! function_exists('cart')) {
      */
     function cart()
     {
-        return Cart::getFacadeRoot();
+        return app()->make('cart');
     }
 }

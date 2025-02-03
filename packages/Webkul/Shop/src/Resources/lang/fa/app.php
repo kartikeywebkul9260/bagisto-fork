@@ -567,13 +567,6 @@ return [
 
         'view' => [
             'type' => [
-                'simple' => [
-                    'customizable-options' => [
-                        'none'         => 'هیچ',
-                        'total-amount' => 'مبلغ کل',
-                    ],
-                ],
-
                 'configurable' => [
                     'select-options'       => 'لطفاً یک گزینه انتخاب کنید',
                     'select-above-options' => 'لطفاً گزینه‌های بالا را انتخاب کنید',
@@ -880,11 +873,8 @@ return [
         ],
 
         'index' => [
-            'categories-carousel' => 'چرخ فلک دسته‌ها',
-            'image-carousel'      => 'چرخ فلک تصاویر',
-            'offer'               => 'تا ۴۰% تخفیف برای سفارش اول شما، اکنون خرید کنید',
-            'product-carousel'    => 'چرخ فلک محصولات',
-            'resend-verify-email' => 'ارسال دوباره ایمیل تایید',
+            'offer'               => 'تا ۴۰٪ تخفیف برای سفارش اولتان دریافت کنید. همین الان خرید کنید',
+            'resend-verify-email' => 'ارسال مجدد ایمیل تأیید',
             'verify-email'        => 'ایمیل خود را تأیید کنید',
         ],
 
@@ -893,10 +883,7 @@ return [
 
     'partials' => [
         'pagination' => [
-            'next-page'          => 'صفحه بعدی',
             'pagination-showing' => 'نمایش :firstItem تا :lastItem از مجموع :total مورد',
-            'prev-page'          => 'صفحه قبلی',
-
         ],
     ],
 
