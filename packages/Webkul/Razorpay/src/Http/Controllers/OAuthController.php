@@ -3,6 +3,7 @@
 namespace Webkul\Razorpay\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -84,11 +85,15 @@ class OAuthController extends Controller
     /**
      * Disconnect the currently linked Razorpay account.
      */
-    public function disconnect(): RedirectResponse
+    public function disconnect(Request $request): JsonResponse|RedirectResponse
     {
         $this->razorpayOAuth->clearTokens();
 
         session()->flash('success', trans('razorpay::app.oauth.disconnected'));
+
+        if ($request->expectsJson()) {
+            return new JsonResponse(['message' => trans('razorpay::app.oauth.disconnected')]);
+        }
 
         return $this->backToConfiguration();
     }

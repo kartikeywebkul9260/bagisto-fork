@@ -15,7 +15,7 @@ return [
         'title' => 'OAuth Connection',
         'token-error' => 'Unable to retrieve the Razorpay access token. Please try again.',
     ],
-    
+
     'drop-in-ui' => [
         'title' => 'رازورپی',
     ],
