@@ -21,6 +21,8 @@ class RazorpayServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
+        $this->loadRoutesFrom(__DIR__.'/../Routes/admin-routes.php');
+
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'razorpay');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'razorpay');

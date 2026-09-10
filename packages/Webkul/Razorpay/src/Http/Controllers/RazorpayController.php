@@ -94,21 +94,15 @@ class RazorpayController extends Controller
             return $this->handlePaymentError($request);
         }
 
-        $isValidSignature = $this->razorpayPayment->verifySignature(
-            $request->input('razorpay_order_id'),
-            $request->input('razorpay_payment_id'),
-            $request->input('razorpay_signature')
-        );
+        $cart = Cart::getCart();
 
-        if (! $isValidSignature) {
+        if (! $cart) {
             session()->flash('error', trans('razorpay::app.response.something-went-wrong'));
 
             return redirect()->route('shop.checkout.cart.index');
         }
 
-        $cart = Cart::getCart();
-
-        if (! $cart) {
+        if (! $this->isPaymentVerified($request, $cart)) {
             session()->flash('error', trans('razorpay::app.response.something-went-wrong'));
 
             return redirect()->route('shop.checkout.cart.index');
@@ -125,6 +119,27 @@ class RazorpayController extends Controller
         session()->flash('error', trans('razorpay::app.response.payment.cancelled'));
 
         return redirect()->route('shop.checkout.cart.index');
+    }
+
+    /**
+     * Verify the returned payment, by connected account in OAuth mode and by
+     * local HMAC signature otherwise.
+     */
+    protected function isPaymentVerified(Request $request, $cart): bool
+    {
+        if ($this->razorpayPayment->isOAuthEnabled()) {
+            return $this->razorpayPayment->verifyOAuthPayment(
+                $request->input('razorpay_order_id'),
+                $request->input('razorpay_payment_id'),
+                (int) ($cart->base_grand_total * 100)
+            );
+        }
+
+        return $this->razorpayPayment->verifySignature(
+            $request->input('razorpay_order_id'),
+            $request->input('razorpay_payment_id'),
+            $request->input('razorpay_signature')
+        );
     }
 
     /**

@@ -2099,6 +2099,19 @@ return [
                 'channel_based' => true,
                 'locale_based' => false,
             ], [
+                'name' => 'oauth',
+                'title' => 'admin::app.configuration.index.sales.payment-methods.oauth',
+                'type' => 'boolean',
+                'info' => 'admin::app.configuration.index.sales.payment-methods.oauth-info',
+                'depends' => 'active:1',
+                'channel_based' => true,
+                'locale_based' => false,
+            ], [
+                'name' => 'oauth_connect',
+                'title' => 'admin::app.configuration.index.sales.payment-methods.oauth-connect',
+                'type' => 'blade',
+                'path' => 'razorpay::configuration.oauth-connect',
+            ], [
                 'name' => 'client_id',
                 'title' => 'admin::app.configuration.index.sales.payment-methods.client-id',
                 'type' => 'text',

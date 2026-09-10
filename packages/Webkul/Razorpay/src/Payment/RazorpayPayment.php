@@ -6,9 +6,15 @@ use Illuminate\Support\Facades\Storage;
 use Razorpay\Api\Api;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Payment\Payment\Payment;
+use Webkul\Razorpay\Services\RazorpayOAuth;
 
 class RazorpayPayment extends Payment
 {
+    /**
+     * Receipt prefix.
+     */
+    public const RECEIPT_PREFIX = 'receipt_';
+
     /**
      * Payment method code.
      *
@@ -24,9 +30,9 @@ class RazorpayPayment extends Payment
     protected $supportedCurrencies = ['INR'];
 
     /**
-     * Receipt prefix.
+     * Create a new payment instance.
      */
-    public const RECEIPT_PREFIX = 'receipt_';
+    public function __construct(protected RazorpayOAuth $razorpayOAuth) {}
 
     /**
      * Get redirect url.
@@ -36,6 +42,16 @@ class RazorpayPayment extends Payment
     public function getRedirectUrl()
     {
         return route('razorpay.payment.redirect');
+    }
+
+    /**
+     * Check whether the OAuth flow is enabled.
+     *
+     * @return bool
+     */
+    public function isOAuthEnabled()
+    {
+        return (bool) $this->getConfigData('oauth');
     }
 
     /**
@@ -135,12 +151,28 @@ class RazorpayPayment extends Payment
     }
 
     /**
+     * Get the key used by the checkout widget, the public token in OAuth mode.
+     *
+     * @return string|null
+     */
+    public function getCheckoutKey()
+    {
+        return $this->isOAuthEnabled()
+            ? $this->razorpayOAuth->getPublicToken()
+            : $this->getApiKey();
+    }
+
+    /**
      * Check if required credentials are configured.
      *
      * @return bool
      */
     public function hasValidCredentials()
     {
+        if ($this->isOAuthEnabled()) {
+            return $this->razorpayOAuth->isConnected();
+        }
+
         return $this->getApiKey() && $this->getApiSecret();
     }
 
@@ -198,9 +230,7 @@ class RazorpayPayment extends Payment
             ]));
         }
 
-        $api = $this->getApi();
-
-        return $api->order->create([
+        $payload = [
             'amount' => (int) ($cart->base_grand_total * 100),
             'currency' => $currency,
             'receipt' => self::RECEIPT_PREFIX.$cart->id,
@@ -208,7 +238,13 @@ class RazorpayPayment extends Payment
             'notes' => [
                 'cart_id' => $cart->id,
             ],
-        ]);
+        ];
+
+        if ($this->isOAuthEnabled()) {
+            return $this->razorpayOAuth->createOrder($payload);
+        }
+
+        return $this->getApi()->order->create($payload);
     }
 
     /**
@@ -221,7 +257,7 @@ class RazorpayPayment extends Payment
     public function preparePaymentData($cart, $razorpayOrder)
     {
         return [
-            'key' => $this->getApiKey(),
+            'key' => $this->getCheckoutKey(),
             'amount' => (int) ($cart->base_grand_total * 100),
             'currency' => strtoupper($cart->base_currency_code ?? core()->getBaseCurrencyCode()),
             'name' => $this->getMerchantName(),
@@ -256,5 +292,33 @@ class RazorpayPayment extends Payment
         $generatedSignature = hash_hmac('sha256', $expectedSignature, $this->getApiSecret());
 
         return hash_equals($generatedSignature, $signature);
+    }
+
+    /**
+     * Verify an OAuth payment by confirming it with the connected account.
+     *
+     * @param  string  $orderId
+     * @param  string  $paymentId
+     * @param  int  $amount
+     * @return bool
+     */
+    public function verifyOAuthPayment($orderId, $paymentId, $amount)
+    {
+        if (
+            ! $orderId
+            || ! $paymentId
+        ) {
+            return false;
+        }
+
+        $payment = $this->razorpayOAuth->fetchPayment($paymentId);
+
+        if (empty($payment)) {
+            return false;
+        }
+
+        return in_array($payment['status'] ?? null, ['captured', 'authorized'])
+            && ($payment['order_id'] ?? null) === $orderId
+            && (int) ($payment['amount'] ?? 0) === (int) $amount;
     }
 }
