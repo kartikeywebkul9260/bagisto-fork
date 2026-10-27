@@ -2,10 +2,14 @@
 
 namespace Webkul\Shop\Http\Controllers\API;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Webkul\Checkout\Facades\Cart;
+use Webkul\Customer\Contracts\Wishlist;
 use Webkul\Customer\Repositories\WishlistRepository;
+use Webkul\Product\Contracts\Product;
 use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Shop\Http\Resources\CartResource;
 use Webkul\Shop\Http\Resources\WishlistResource;
@@ -83,6 +87,81 @@ class WishlistController extends APIController
 
         return new JsonResource([
             'message' => trans('shop::app.customers.account.wishlist.removed'),
+        ]);
+    }
+
+    /**
+     * Add the product page selection to the wishlist, or take that selection off when it is already there.
+     */
+    public function toggle(): JsonResource|JsonResponse
+    {
+        $this->validate(request(), [
+            'product_id' => 'required|integer|exists:products,id',
+        ]);
+
+        $product = $this->productRepository->find(request()->input('product_id'));
+
+        $options = $product->getTypeInstance()->prepareForWishlist(request()->all());
+
+        if (is_string($options)) {
+            return (new JsonResource([
+                'message' => $options,
+            ]))->response()->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $wishlistItem = $this->findWishlistItem($product, $options);
+
+        if ($wishlistItem) {
+            Event::dispatch('customer.wishlist.delete.before', $wishlistItem->id);
+
+            $this->wishlistRepository->delete($wishlistItem->id);
+
+            Event::dispatch('customer.wishlist.delete.after', $wishlistItem->id);
+
+            return new JsonResource([
+                'is_wishlist' => false,
+                'message' => trans('shop::app.customers.account.wishlist.removed'),
+            ]);
+        }
+
+        Event::dispatch('customer.wishlist.create.before', $product->id);
+
+        $wishlistItem = $this->wishlistRepository->create([
+            'channel_id' => core()->getCurrentChannel()->id,
+            'product_id' => $product->id,
+            'customer_id' => auth()->guard('customer')->user()->id,
+            'additional' => $options ?: null,
+        ]);
+
+        Event::dispatch('customer.wishlist.create.after', $wishlistItem);
+
+        return new JsonResource([
+            'is_wishlist' => true,
+            'message' => trans('shop::app.customers.account.wishlist.success'),
+        ]);
+    }
+
+    /**
+     * Tell the product page whether its current selection is already on the wishlist.
+     */
+    public function status(): JsonResource
+    {
+        $this->validate(request(), [
+            'product_id' => 'required|integer|exists:products,id',
+        ]);
+
+        $product = $this->productRepository->find(request()->input('product_id'));
+
+        $options = $product->getTypeInstance()->prepareForWishlist(request()->all());
+
+        if (is_string($options)) {
+            return new JsonResource([
+                'is_wishlist' => false,
+            ]);
+        }
+
+        return new JsonResource([
+            'is_wishlist' => (bool) $this->findWishlistItem($product, $options),
         ]);
     }
 
@@ -223,5 +302,19 @@ class WishlistController extends APIController
         return $customer->wishlist_items()
             ->whereIn('product_id', $inactiveItemIds)
             ->delete();
+    }
+
+    /**
+     * Find the customer's wishlist entry for the product that holds the given options.
+     */
+    protected function findWishlistItem(Product $product, array $options): ?Wishlist
+    {
+        return $this->wishlistRepository
+            ->findWhere([
+                'channel_id' => core()->getCurrentChannel()->id,
+                'customer_id' => auth()->guard('customer')->user()->id,
+                'product_id' => $product->id,
+            ])
+            ->first(fn ($wishlistItem) => $product->getTypeInstance()->compareWishlistOptions($wishlistItem->additional, $options));
     }
 }

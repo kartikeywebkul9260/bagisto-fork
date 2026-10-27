@@ -4,6 +4,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## Unreleased
 
+- Fixed the wishlist button on the product page and product card for configurable, bundle and grouped products. It now saves the selected variant, bundle options or child quantities, or the first salable combination when nothing is selected or the heart is tapped on a card, so the entry can be moved to the cart. The heart now fills only when that exact selection is on the wishlist, and tapping it again removes only that selection instead of every entry for the product.
+
 - Added the currencies of the East African Community — the Tanzanian, Kenyan, Ugandan and Somali shillings, the Rwandan, Burundian and Congolese francs, and the South Sudanese pound — to the installer.
 
 - Added Swahili (Kiswahili) as a supported locale, translated across the admin, the storefront and the installer.

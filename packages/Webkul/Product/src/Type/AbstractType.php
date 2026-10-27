@@ -444,6 +444,50 @@ abstract class AbstractType
     }
 
     /**
+     * Return the options a product page wishlist entry stores, or an error when a required one is missing.
+     */
+    public function prepareForWishlist(array $data): array|string
+    {
+        return [];
+    }
+
+    /**
+     * Return true when a wishlist entry's stored options match the prepared ones; empty options match any entry.
+     */
+    public function compareWishlistOptions(?array $wishlistOptions, array $options): bool
+    {
+        if (! $options) {
+            return true;
+        }
+
+        if (! $wishlistOptions) {
+            return false;
+        }
+
+        return (bool) $this->compareOptions($wishlistOptions, $options);
+    }
+
+    /**
+     * Return true when one of the given wishlist entries holds this product's default selection.
+     */
+    public function isDefaultSelectionWishlisted(Collection $wishlistItems): bool
+    {
+        $wishlistItems = $wishlistItems->where('product_id', $this->product->id);
+
+        if ($wishlistItems->isEmpty()) {
+            return false;
+        }
+
+        $options = $this->prepareForWishlist([]);
+
+        if (is_string($options)) {
+            return false;
+        }
+
+        return $wishlistItems->contains(fn ($wishlistItem) => $this->compareWishlistOptions($wishlistItem->additional, $options));
+    }
+
+    /**
      * Return true if product can be added to cart without options.
      *
      * @return bool

@@ -219,6 +219,58 @@ class Grouped extends AbstractType
     }
 
     /**
+     * Return the selected child quantities, falling back to the salable defaults when none are chosen.
+     */
+    public function prepareForWishlist(array $data): array|string
+    {
+        $quantities = $this->normalizeQuantities((array) ($data['qty'] ?? []));
+
+        $salableProducts = $this->product->grouped_products
+            ->sortBy('sort_order')
+            ->filter(fn ($groupedProduct) => $groupedProduct->associated_product?->isSaleable());
+
+        if (! $quantities) {
+            $quantities = $this->normalizeQuantities($salableProducts
+                ->mapWithKeys(fn ($groupedProduct) => [$groupedProduct->associated_product_id => $groupedProduct->qty])
+                ->all());
+        }
+
+        if (! $quantities) {
+            $quantities = $this->normalizeQuantities([
+                $salableProducts->first()?->associated_product_id => 1,
+            ]);
+        }
+
+        if (! $quantities) {
+            return trans('product::app.checkout.cart.integrity.qty-missing');
+        }
+
+        return [
+            'product_id' => $this->product->id,
+            'qty' => $quantities,
+        ];
+    }
+
+    /**
+     * Return true when both option sets ask for the same quantity of each child product.
+     *
+     * @param  array  $options1
+     * @param  array  $options2
+     * @return bool
+     */
+    public function compareOptions($options1, $options2)
+    {
+        if (
+            $this->product->id != ($options2['product_id'] ?? null)
+            || ! isset($options1['qty'])
+        ) {
+            return false;
+        }
+
+        return $this->normalizeQuantities((array) $options1['qty']) === $this->normalizeQuantities((array) ($options2['qty'] ?? []));
+    }
+
+    /**
      * Returns price indexer class for a specific product type.
      *
      * @return string
@@ -271,5 +323,28 @@ class Grouped extends AbstractType
         foreach ($this->product->grouped_products as $groupedProduct) {
             $product->grouped_products()->save($groupedProduct->replicate());
         }
+    }
+
+    /**
+     * Keep the positive whole quantities of this product's own children, ordered by child id.
+     */
+    protected function normalizeQuantities(array $quantities): array
+    {
+        $childrenIds = array_map('intval', $this->getChildrenIds());
+
+        $normalized = [];
+
+        foreach ($quantities as $productId => $qty) {
+            if (
+                (int) $qty > 0
+                && in_array((int) $productId, $childrenIds, true)
+            ) {
+                $normalized[(int) $productId] = (int) $qty;
+            }
+        }
+
+        ksort($normalized);
+
+        return $normalized;
     }
 }

@@ -118,6 +118,10 @@ Route::group(['prefix' => 'api'], function () {
 
             Route::post('', 'store')->name('shop.api.customers.account.wishlist.store');
 
+            Route::post('toggle', 'toggle')->name('shop.api.customers.account.wishlist.toggle');
+
+            Route::get('status', 'status')->name('shop.api.customers.account.wishlist.status');
+
             Route::post('{id}/move-to-cart', 'moveToCart')->name('shop.api.customers.account.wishlist.move_to_cart');
 
             Route::delete('all', 'destroyAll')->name('shop.api.customers.account.wishlist.destroy_all');

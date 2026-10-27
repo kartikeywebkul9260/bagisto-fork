@@ -595,6 +595,8 @@
                     return {
                         isWishlist: false,
 
+                        wishlistStatusRequest: 0,
+
                         isCustomer: '{{ auth()->guard('customer')->check() }}',
 
                         is_buy_now: 0,
@@ -609,6 +611,16 @@
 
                 mounted() {
                     this.checkWishlistStatus();
+
+                    this.$emitter.on('configurable-variant-selected-event', this.checkWishlistStatus);
+
+                    this.$emitter.on('product-options-updated-event', this.checkWishlistStatus);
+                },
+
+                beforeUnmount() {
+                    this.$emitter.off('configurable-variant-selected-event', this.checkWishlistStatus);
+
+                    this.$emitter.off('product-options-updated-event', this.checkWishlistStatus);
                 },
 
                 methods: {
@@ -649,46 +661,54 @@
                     },
 
                     checkWishlistStatus() {
-                        if (this.isCustomer) {
-                            /**
-                             * Fetches the wishlist items for the customer and checks whether the current
-                             * product exists in the wishlist. If found, `isWishlist` is set to true;
-                             * otherwise, it is set to false.
-                             *
-                             * This approach is used due to Full Page Cache (FPC) limitations. We cannot
-                             * use a replacer here because `product_id` is dynamic, and the replacer
-                             * cannot reliably detect it.
-                             */
-                            this.$axios.get('{{ route('shop.api.customers.account.wishlist.index') }}')
-                                .then(response => {
-                                    const wishlistItems = response.data.data || [];
+                        if (! this.isCustomer) {
+                            return;
+                        }
 
-                                    this.isWishlist = Boolean(wishlistItems.find(item => item.product.id == "{{ $product->id }}")?.product?.is_wishlist);
+                        const requestId = ++this.wishlistStatusRequest;
+
+                        this.$nextTick(() => {
+                            this.$axios.get('{{ route('shop.api.customers.account.wishlist.status') }}', {
+                                    params: this.getWishlistOptions(),
+                                })
+                                .then(response => {
+                                    if (requestId === this.wishlistStatusRequest) {
+                                        this.isWishlist = response.data.data.is_wishlist;
+                                    }
                                 })
                                 .catch(error => {});
-                        }
+                        });
                     },
 
                     addToWishlist() {
-                        if (this.isCustomer) {
-                            this.$axios.post('{{ route('shop.api.customers.account.wishlist.store') }}', {
-                                    product_id: "{{ $product->id }}"
-                                })
-                                .then(response => {
-                                    this.isWishlist = ! this.isWishlist;
-
-                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.data.message });
-                                })
-                                .catch(error => {});
-                        } else {
+                        if (! this.isCustomer) {
                             window.location.href = "{{ route('shop.customer.session.index')}}";
+
+                            return;
                         }
+
+                        this.$axios.post('{{ route('shop.api.customers.account.wishlist.toggle') }}', this.getWishlistOptions())
+                            .then(response => {
+                                ++this.wishlistStatusRequest;
+
+                                this.isWishlist = response.data.data.is_wishlist;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.data.message });
+                            })
+                            .catch(error => {
+                                this.$emitter.emit('add-flash', { type: 'warning', message: error.response?.data?.data?.message ?? error.response?.data?.message });
+                            });
+                    },
+
+                    getWishlistOptions() {
+                        const params = new URLSearchParams(new FormData(this.$refs.formData));
+
+                        params.delete('is_buy_now');
+
+                        return params;
                     },
 
                     addToCompare(productId) {
-                        /**
-                         * This will handle for customers.
-                         */
                         if (this.isCustomer) {
                             this.$axios.post('{{ route("shop.api.compare.store") }}', {
                                     'product_id': productId
@@ -709,9 +729,6 @@
                             return;
                         }
 
-                        /**
-                         * This will handle for guests.
-                         */
                         let existingItems = this.getStorageValue(this.getCompareItemsStorageKey()) ?? [];
 
                         if (existingItems.length) {

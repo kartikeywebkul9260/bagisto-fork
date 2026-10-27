@@ -332,6 +332,8 @@
                         for (var key in option.products) {
                             option.products[key].is_default = selectedProductIds.indexOf(option.products[key].id) > -1 ? 1 : 0;
                         }
+
+                        this.$emitter.emit('product-options-updated-event');
                     }
                 }
             });
@@ -387,6 +389,8 @@
                         }
 
                         this.option.products.find(data => data.id == this.selectedProduct).qty = qty;
+
+                        this.$emitter.emit('product-options-updated-event');
                     }
                 }
             });

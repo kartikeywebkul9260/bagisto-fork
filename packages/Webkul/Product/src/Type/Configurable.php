@@ -306,6 +306,36 @@ class Configurable extends AbstractType
     }
 
     /**
+     * Return the selected variant's options, falling back to the first salable variant when none is chosen.
+     */
+    public function prepareForWishlist(array $data): array|string
+    {
+        $variantId = (int) ($data['selected_configurable_option'] ?? 0);
+
+        if (
+            ! $variantId
+            && ! array_filter((array) ($data['super_attribute'] ?? []))
+        ) {
+            $variantId = (int) $this->product->variants->first(fn ($variant) => $variant->isSaleable())?->id;
+        }
+
+        $variant = $this->product->variants->first(fn ($variant) => $variant->id == $variantId);
+
+        if (! $variant) {
+            return trans('product::app.checkout.cart.missing-options');
+        }
+
+        return $this->getAdditionalOptions([
+            'product_id' => $this->product->id,
+            'quantity' => $this->handleQuantity((int) ($data['quantity'] ?? 1)),
+            'selected_configurable_option' => $variant->id,
+            'super_attribute' => $this->product->super_attributes
+                ->mapWithKeys(fn ($attribute) => [$attribute->id => $variant->{$attribute->code}])
+                ->all(),
+        ]);
+    }
+
+    /**
      * Get product prices.
      *
      * @return array
@@ -422,7 +452,7 @@ class Configurable extends AbstractType
             isset($options1['selected_configurable_option'])
             && isset($options2['selected_configurable_option'])
         ) {
-            return $options1['selected_configurable_option'] === $options2['selected_configurable_option'];
+            return (int) $options1['selected_configurable_option'] === (int) $options2['selected_configurable_option'];
         }
 
         if (! isset($options1['selected_configurable_option'])) {

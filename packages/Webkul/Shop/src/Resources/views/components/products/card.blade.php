@@ -346,25 +346,26 @@
 
             methods: {
                 addToWishlist() {
-                    if (this.isCustomer) {
-                        this.$axios.post(`{{ route('shop.api.customers.account.wishlist.store') }}`, {
-                                product_id: this.product.id
-                            })
-                            .then(response => {
-                                this.product.is_wishlist = ! this.product.is_wishlist;
+                    if (! this.isCustomer) {
+                        window.location.href = "{{ route('shop.customer.session.index')}}";
 
-                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.data.message });
-                            })
-                            .catch(error => {});
-                        } else {
-                            window.location.href = "{{ route('shop.customer.session.index')}}";
-                        }
+                        return;
+                    }
+
+                    this.$axios.post(`{{ route('shop.api.customers.account.wishlist.toggle') }}`, {
+                            product_id: this.product.id
+                        })
+                        .then(response => {
+                            this.product.is_wishlist = response.data.data.is_wishlist;
+
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.data.message });
+                        })
+                        .catch(error => {
+                            this.$emitter.emit('add-flash', { type: 'warning', message: error.response?.data?.data?.message ?? error.response?.data?.message });
+                        });
                 },
 
                 addToCompare(productId) {
-                    /**
-                     * This will handle for customers.
-                     */
                     if (this.isCustomer) {
                         this.$axios.post('{{ route("shop.api.compare.store") }}', {
                                 'product_id': productId
@@ -385,9 +386,6 @@
                         return;
                     }
 
-                    /**
-                     * This will handle for guests.
-                     */
                     let items = this.getStorageValue() ?? [];
 
                     if (items.length) {

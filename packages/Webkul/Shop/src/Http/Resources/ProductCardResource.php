@@ -29,13 +29,8 @@ class ProductCardResource extends JsonResource
     }
 
     /**
-     * Transform the resource into an array.
-     *
-     * This is a slim variant of {@see ProductResource} used for product
-     * listings and carousels. The heavy `description` field and the full
-     * `images` gallery are intentionally omitted - the product card never
-     * renders them - which keeps listing payloads small and avoids
-     * generating cached gallery image URLs for every product.
+     * Transform the resource into the slim listing variant of ProductResource, without the heavy
+     * description and gallery the product card never renders.
      *
      * @param  Request  $request
      * @return array
@@ -54,9 +49,9 @@ class ProductCardResource extends JsonResource
             'is_featured' => (bool) $this->featured,
             'on_sale' => (bool) $productTypeInstance->haveDiscount(),
             'is_saleable' => (bool) $productTypeInstance->isSaleable(),
-            'is_wishlist' => (bool) auth()->guard()->user()?->wishlist_items
-                ->where('channel_id', core()->getCurrentChannel()->id)
-                ->where('product_id', $this->id)->count(),
+            'is_wishlist' => $productTypeInstance->isDefaultSelectionWishlisted(
+                auth()->guard()->user()?->wishlist_items->where('channel_id', core()->getCurrentChannel()->id) ?? collect()
+            ),
             'min_price' => core()->formatPrice($productTypeInstance->getMinimalPrice()),
             'price_html' => $productTypeInstance->getPriceHtml(),
             'ratings' => [

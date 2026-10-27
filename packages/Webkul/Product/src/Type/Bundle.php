@@ -120,27 +120,6 @@ class Bundle extends AbstractType
     }
 
     /**
-     * Copy relationships.
-     *
-     * @param  \Webkul\Product\Models\Product  $product
-     * @return void
-     */
-    protected function copyRelationships($product)
-    {
-        parent::copyRelationships($product);
-
-        $attributesToSkip = config('products.copy.skip_attributes') ?? [];
-
-        if (in_array('bundle_options', $attributesToSkip)) {
-            return;
-        }
-
-        foreach ($this->product->bundle_options as $bundleOption) {
-            $product->bundle_options()->save($bundleOption->replicate());
-        }
-    }
-
-    /**
      * Returns children ids.
      *
      * @return array
@@ -488,6 +467,49 @@ class Bundle extends AbstractType
     }
 
     /**
+     * Return the selected bundle options, falling back to the salable defaults when none are chosen.
+     */
+    public function prepareForWishlist(array $data): array|string
+    {
+        $bundleOptions = array_map('array_values', array_filter($this->validateBundleOptionForCart(
+            $this->ownBundleOptions((array) ($data['bundle_options'] ?? []))
+        )));
+
+        if (! $bundleOptions) {
+            $bundleOptions = $this->getDefaultWishlistBundleOptions();
+        }
+
+        if (! $bundleOptions) {
+            return trans('product::app.checkout.cart.missing-options');
+        }
+
+        foreach ($this->product->bundle_options as $option) {
+            $selectedIds = $bundleOptions[$option->id] ?? [];
+
+            if (
+                $option->is_required
+                && ! $selectedIds
+            ) {
+                return trans('product::app.checkout.cart.missing-options');
+            }
+
+            if (array_diff($selectedIds, $option->bundle_option_products->pluck('id')->all())) {
+                return trans('product::app.checkout.cart.missing-options');
+            }
+        }
+
+        return $this->getAdditionalOptions([
+            'product_id' => $this->product->id,
+            'quantity' => $this->handleQuantity((int) ($data['quantity'] ?? 1)),
+            'bundle_options' => $bundleOptions,
+            'bundle_option_qty' => array_intersect_key(
+                array_filter(array_map('intval', (array) ($data['bundle_option_qty'] ?? []))),
+                $bundleOptions
+            ),
+        ]);
+    }
+
+    /**
      * Validate cart item product price and other things.
      */
     public function validateCartItem(CartItem $item): CartItemValidationResult
@@ -606,5 +628,59 @@ class Bundle extends AbstractType
                 }
             },
         ];
+    }
+
+    /**
+     * Copy relationships.
+     *
+     * @param  \Webkul\Product\Models\Product  $product
+     * @return void
+     */
+    protected function copyRelationships($product)
+    {
+        parent::copyRelationships($product);
+
+        $attributesToSkip = config('products.copy.skip_attributes') ?? [];
+
+        if (in_array('bundle_options', $attributesToSkip)) {
+            return;
+        }
+
+        foreach ($this->product->bundle_options as $bundleOption) {
+            $product->bundle_options()->save($bundleOption->replicate());
+        }
+    }
+
+    /**
+     * Return each option's salable defaults, or its first salable product when a required option has none.
+     */
+    protected function getDefaultWishlistBundleOptions(): array
+    {
+        $bundleOptions = [];
+
+        foreach ($this->product->bundle_options as $option) {
+            $salableProducts = $option->bundle_option_products
+                ->sortBy('sort_order')
+                ->filter(fn ($optionProduct) => $optionProduct->product?->isSaleable());
+
+            $defaultProducts = $salableProducts->where('is_default', 1);
+
+            if (
+                $defaultProducts->isEmpty()
+                && $option->is_required
+            ) {
+                $defaultProducts = $salableProducts->take(1);
+            }
+
+            if (in_array($option->type, ['select', 'radio'])) {
+                $defaultProducts = $defaultProducts->take(1);
+            }
+
+            if ($defaultProducts->isNotEmpty()) {
+                $bundleOptions[$option->id] = $defaultProducts->pluck('id')->values()->all();
+            }
+        }
+
+        return $bundleOptions;
     }
 }
