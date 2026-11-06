@@ -5,6 +5,8 @@ namespace Webkul\Core\Traits;
 use ArPHP\I18N\Arabic;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 
 trait PDFHandler
@@ -16,10 +18,8 @@ trait PDFHandler
     {
         $fileName = $this->resolvePdfFileName($fileName);
 
-        $html = $this->preparePdfHtml($html);
-
-        if ($this->isRtlLocale()) {
-            $mpdf = $this->buildMpdf($html);
+        if ($this->requiresComplexEngine($html)) {
+            $mpdf = $this->buildMpdf($this->preparePdfHtml($this->tagScriptRuns($html)));
 
             return response()->streamDownload(
                 fn () => print ($mpdf->Output('', 'S')),
@@ -27,7 +27,7 @@ trait PDFHandler
             );
         }
 
-        return Pdf::loadHTML($html)
+        return Pdf::loadHTML($this->preparePdfHtml($html))
             ->setPaper('A4', 'portrait')
             ->setOption('defaultFont', 'Courier')
             ->download($fileName.'.pdf');
@@ -38,13 +38,11 @@ trait PDFHandler
      */
     public function generatePdf(string $html): string
     {
-        $html = $this->preparePdfHtml($html);
-
-        if ($this->isRtlLocale()) {
-            return $this->buildMpdf($html)->Output('', 'S');
+        if ($this->requiresComplexEngine($html)) {
+            return $this->buildMpdf($this->preparePdfHtml($this->tagScriptRuns($html)))->Output('', 'S');
         }
 
-        return Pdf::loadHTML($html)
+        return Pdf::loadHTML($this->preparePdfHtml($html))
             ->setPaper('A4', 'portrait')
             ->setOption('defaultFont', 'Courier')
             ->output();
@@ -55,20 +53,42 @@ trait PDFHandler
      */
     private function buildMpdf(string $html): Mpdf
     {
+        $defaultConfig = (new ConfigVariables)->getDefaults();
+
+        $defaultFontConfig = (new FontVariables)->getDefaults();
+
         $mpdf = new Mpdf([
             'margin_left' => 0,
             'margin_right' => 0,
             'margin_top' => 0,
             'margin_bottom' => 0,
+            'fontDir' => array_merge($defaultConfig['fontDir'], [public_path('fonts')]),
+            'fontdata' => $defaultFontConfig['fontdata'] + $this->bundledScriptFonts(),
         ]);
 
-        $mpdf->SetDirectionality('rtl');
+        if ($this->isRtlLocale()) {
+            $mpdf->SetDirectionality('rtl');
+        }
 
         $mpdf->SetDisplayMode('fullpage');
 
         $mpdf->WriteHTML($html);
 
         return $mpdf;
+    }
+
+    /**
+     * The fonts shipped in public/fonts for the scripts mPDF does not bundle.
+     */
+    private function bundledScriptFonts(): array
+    {
+        return [
+            'notosanssc' => ['R' => 'NotoSansSC-Regular.ttf', 'B' => 'NotoSansSC-Bold.ttf'],
+            'notosansjp' => ['R' => 'NotoSansJP-Regular.ttf', 'B' => 'NotoSansJP-Bold.ttf'],
+            'hind' => ['R' => 'Hind-Regular.ttf', 'B' => 'Hind-Bold.ttf'],
+            'notosansbengali' => ['R' => 'NotoSansBengali-Regular.ttf', 'B' => 'NotoSansBengali-Bold.ttf'],
+            'notosanssinhala' => ['R' => 'NotoSansSinhala-Regular.ttf', 'B' => 'NotoSansSinhala-Bold.ttf'],
+        ];
     }
 
     /**
@@ -87,6 +107,87 @@ trait PDFHandler
     private function isRtlLocale(): bool
     {
         return core()->getCurrentLocale()->direction === 'rtl';
+    }
+
+    /**
+     * Determine whether the HTML needs mPDF, by RTL locale or by any non-Latin script.
+     */
+    private function requiresComplexEngine(string $html): bool
+    {
+        return $this->isRtlLocale()
+            || (bool) preg_match('/[\p{Arabic}\p{Hebrew}\p{Cyrillic}\p{Greek}\p{Thai}\p{Devanagari}\p{Bengali}\p{Sinhala}\p{Han}\p{Hiragana}\p{Katakana}\p{Hangul}]/u', $html);
+    }
+
+    /**
+     * Wrap each non-Latin text run in a span naming the font that covers its script.
+     */
+    private function tagScriptRuns(string $html): string
+    {
+        $segments = preg_split('/(<[^>]*>)/', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        $inRawBlock = false;
+
+        foreach ($segments as $index => $segment) {
+            if ($segment === '') {
+                continue;
+            }
+
+            if ($segment[0] === '<') {
+                $inRawBlock = $this->tracksRawBlock($segment, $inRawBlock);
+
+                continue;
+            }
+
+            if (! $inRawBlock) {
+                $segments[$index] = $this->wrapScriptRuns($segment);
+            }
+        }
+
+        return implode('', $segments);
+    }
+
+    /**
+     * Track whether the parser sits inside a style or script block after the given tag.
+     */
+    private function tracksRawBlock(string $tag, bool $current): bool
+    {
+        if (preg_match('/^<\s*(style|script)[\s>]/i', $tag)) {
+            return true;
+        }
+
+        if (preg_match('/^<\s*\/\s*(style|script)\s*>/i', $tag)) {
+            return false;
+        }
+
+        return $current;
+    }
+
+    /**
+     * Wrap every non-Latin script run in the given text with its font-family span.
+     */
+    private function wrapScriptRuns(string $text): string
+    {
+        return preg_replace_callback(
+            '/(?:[\p{Arabic}\p{Hebrew}\p{Cyrillic}\p{Greek}\p{Thai}\p{Devanagari}\p{Bengali}\p{Sinhala}\p{Han}\p{Hiragana}\p{Katakana}]|\p{M})+/u',
+            fn (array $matches) => '<span style="font-family: '.$this->fontForRun($matches[0]).'">'.$matches[0].'</span>',
+            $text
+        );
+    }
+
+    /**
+     * Pick the bundled or mPDF font that covers the given script run.
+     */
+    private function fontForRun(string $run): string
+    {
+        return match (true) {
+            (bool) preg_match('/\p{Arabic}/u', $run) => 'xbriyaz',
+            (bool) preg_match('/\p{Devanagari}/u', $run) => 'hind',
+            (bool) preg_match('/\p{Bengali}/u', $run) => 'notosansbengali',
+            (bool) preg_match('/\p{Sinhala}/u', $run) => 'notosanssinhala',
+            (bool) preg_match('/[\p{Hiragana}\p{Katakana}]/u', $run) => 'notosansjp',
+            (bool) preg_match('/\p{Han}/u', $run) => 'notosanssc',
+            default => 'dejavusans',
+        };
     }
 
     /**
